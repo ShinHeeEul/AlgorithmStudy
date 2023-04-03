@@ -26,3 +26,44 @@
 
  <p>첫째 줄에 D<sub>i</sub>를 공백으로 구분하여 순서대로 출력한다.</p>
 
+
+## Priority Queue를 이용한 오답
+Priority Queue를 사용하여 계산하였지만 Priority Queue 내부의 poll()과 peek()의 연산 과정이 오래 걸려 fail.
+
+```java
+import java.io.*;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String[] arg) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(st.nextToken());
+        int L = Integer.parseInt(st.nextToken());
+
+        st = new StringTokenizer(br.readLine(), " ");
+        int[] A = new int[N];
+        //우선순위 큐는 낮은 것부터 나감
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+        for(int i = 0; i < N; i++) {
+            A[i] = Integer.parseInt(st.nextToken());
+            int index1 = i;
+            if(!priorityQueue.isEmpty()) priorityQueue.removeIf(a -> a > A[index1]);
+
+            if(i >= L)
+                priorityQueue.remove(A[i - L]);
+            priorityQueue.add(A[i]);
+
+            bw.write(priorityQueue.peek() + " ");
+        }
+
+        bw.flush();
+    }
+}
+```
