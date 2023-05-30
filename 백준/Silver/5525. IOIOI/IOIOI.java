@@ -18,11 +18,8 @@ class Main {
         int count = 0;
 
         for(int i = 0; i < s.length()-(N*2); i++) {
-            String tmp = "" + s.charAt(i);
-            if(tmp.equals("I")) {
-                for(int j = i+1; j < i + Pn.length(); j++)
-                    tmp += s.charAt(j);
-                //System.out.println(tmp);
+            if(s.charAt(i) == 'I') {
+                String tmp = s.substring(i, i + Pn.length());
                 if(tmp.equals(Pn)) count++;
             }
 
