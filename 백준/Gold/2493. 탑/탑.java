@@ -8,31 +8,33 @@ import java.util.StringTokenizer;
 
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = read();
         Stack<Node> stack = new Stack<>();
+        StringBuffer sb = new StringBuffer();
 
         for (int i = 0; i < n; i++) {
-            int current = Integer.parseInt(st.nextToken());
+            int current = read();
             boolean b = true;
             while(!stack.isEmpty()) {
                 Node node = stack.pop();
 
                 if (node.val >= current) {
-                    System.out.print(node.index + " ");
+                    sb.append(node.index).append(" ");
                     stack.push(node);
                     b = false;
                     break;
                 }
             }
             if(b) {
-                System.out.print(0 + " ");
+                sb.append(0).append(" ");
             }
             stack.push(new Node(current, i + 1));
         }
+
+        System.out.println(sb);
     }
 
     static class Node {
@@ -43,5 +45,12 @@ public class Main {
             this.val = val;
             this.index = index;
         }
+    }
+
+    private static int read() throws Exception {
+        int d, o = System.in.read() & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+        return o;
     }
 }
