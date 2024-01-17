@@ -1,16 +1,11 @@
-import java.util.ArrayList;
-
-
 public class Main {
     public static void main(String[] args) throws Exception {
-
         int N = read();
-        int[] arr = new int[N];
         int[] list = new int[N];
         int size = 0;
+
         for(int i = 0; i < N; i++) {
-            arr[i] = read();
-            int a = arr[i];
+            int a = read();
 
             if(size == 0) {
                 list[size++] = a;
