@@ -6,37 +6,37 @@ public class Main {
 
         int N = read();
         int[] arr = new int[N];
-        ArrayList<Integer> list = new ArrayList<>();
+        int[] list = new int[N];
+        int size = 0;
         for(int i = 0; i < N; i++) {
             arr[i] = read();
             int a = arr[i];
-            int size = list.size();
 
-            if(list.size() == 0) {
-                list.add(a);
+            if(size == 0) {
+                list[size++] = a;
                 continue;
             }
-            int b = list.get(size - 1);
+            int b = list[size - 1];
             if(b > a) {
-                list.add(a);
+                list[size++] = a;
             } else if(b < a) {
                 int start = 0;
                 int end = size;
                 while(start < end) {
                     int mid = (start + end) / 2;
 
-                    int tmp = list.get(mid);
+                    int tmp = list[mid];
                     if(tmp > a) {
                         start = mid + 1;
                     } else {
                         end = mid;
                     }
                 }
-                list.set(end, a);
+                list[end] = a;
             }
         }
 
-        System.out.println(list.size());
+        System.out.println(size);
 
     }
 
