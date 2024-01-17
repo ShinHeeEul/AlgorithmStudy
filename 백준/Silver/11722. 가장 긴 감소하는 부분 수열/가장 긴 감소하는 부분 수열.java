@@ -19,9 +19,7 @@ public class Main {
                 int end = size;
                 while(start < end) {
                     int mid = (start + end) / 2;
-
-                    int tmp = list[mid];
-                    if(tmp > a) {
+                    if(list[mid] > a) {
                         start = mid + 1;
                     } else {
                         end = mid;
@@ -30,9 +28,7 @@ public class Main {
                 list[end] = a;
             }
         }
-
         System.out.println(size);
-
     }
 
 
