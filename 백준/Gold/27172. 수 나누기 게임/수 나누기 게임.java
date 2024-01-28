@@ -4,18 +4,16 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int N = Integer.parseInt(br.readLine());
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = read();
 
         int[] arr = new int[N];
         int INF = 1000001;
         int[] point = new int[INF];
         for(int i = 0; i < N; i++) {
-            int a = Integer.parseInt(st.nextToken());
+            int a = read();
             for(int j = 2; j * a < INF; j++) point[j * a]--;
 
             for(int j = 1; j * j <= a; j++) {
@@ -36,5 +34,12 @@ public class Main {
             sb.append(point[arr[i]]).append(" ");
         }
         System.out.println(sb);
+    }
+
+    private static int read() throws Exception {
+        int d, o = System.in.read() & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+        return o;
     }
 }
