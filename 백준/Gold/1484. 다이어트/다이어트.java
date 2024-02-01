@@ -3,23 +3,22 @@ import java.util.PriorityQueue;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
         int G  = read();
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-
-        for(long remember = 1; remember < 100000; remember++) {
+        StringBuilder sb = new StringBuilder();
+        for(long remember = 1; remember <= G; remember++) {
             double current = Math.sqrt(G + remember * remember);
-            if(current == (int) current) {
-                pq.add((int) current);
-            }
+            int ic = (int) current;
+            if(current == ic) pq.add(ic);
         }
         if(pq.isEmpty()) {
             System.out.println(-1);
             return;
         }
         while(!pq.isEmpty()) {
-            System.out.println(pq.poll());
+            sb.append(pq.poll()).append("\n");
         }
+        System.out.println(sb);
     }
 
 
