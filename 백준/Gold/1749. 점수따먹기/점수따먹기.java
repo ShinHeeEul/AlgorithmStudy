@@ -15,9 +15,6 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             for(int j = 0; j < M; j++) {
                 int tmp = Integer.parseInt(st.nextToken());
-                if(answer < tmp) {
-                    answer = tmp;
-                }
                 dp[i+1][j+1] = dp[i][j+1] + dp[i+1][j] + tmp- dp[i][j];
                 if(answer < dp[i+1][j+1]) {
                     answer = dp[i+1][j+1];
