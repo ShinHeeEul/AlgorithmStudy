@@ -8,8 +8,8 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-        long[][] dp = new long[N+1][M+1];
-        long answer = -Long.MIN_VALUE;
+        int[][] dp = new int[N+1][M+1];
+        int answer = Integer.MIN_VALUE;
 
         for(int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
@@ -29,12 +29,13 @@ public class Main {
             for(int j = 1; j <= M; j++) {
                 for(int k = N; k >= i; k--) {
                     for(int l = M; l >= j; l--) {
-                        long tmp;
+                        int tmp;
                         if(i == 1) {
                             tmp = dp[k][l] - dp[k][j-1] - dp[i-1][l] + dp[i][j-1];
                         } else {
                             tmp = dp[k][l] - dp[k][j - 1] - dp[i - 1][l] + dp[i - 1][j - 1];
                         }
+
                         if(tmp > answer){
                             answer = tmp;
                         }
