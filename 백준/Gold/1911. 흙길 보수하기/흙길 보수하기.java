@@ -14,18 +14,20 @@ public class Main {
         }
 
         Collections.sort(list);
+
         int answer = 0;
         int before = -1;
         for(Node n : list) {
             if(n.start <= before) n.start = before + 1;
             int a = n.end - n.start;
+            int b = a % L;
+            int c = a / L;
 
             if(a <= 0) continue;
-            if(a % L == 0) {
-                answer += a / L;
-            } else {
-                answer += a / L + 1;
-                before = n.end + L - a % L - 1;
+            if(b == 0) answer += c;
+            else {
+                answer += c + 1;
+                before = n.end + L - b - 1;
             }
         }
 
