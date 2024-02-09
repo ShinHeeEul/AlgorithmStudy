@@ -7,22 +7,23 @@ public class Main {
         long start = 0;
         long end = Integer.MAX_VALUE;
         int[] arr = new int[N];
+
         for(int i = 0 ; i < N; i++) {
             arr[i] = read();
-            if(end > arr[i]) end = arr[i];
+            end = Math.min(end, arr[i]);
         }
         end *= M;
 
         while(start < end) {
             long mid = (start + end) / 2;
             long ans = 0;
-            for(int i : arr) ans += mid/i;
-
-            if(ans < M) {
-                start = mid + 1;
-            } else {
-                end = mid;
+            for(int i : arr) {
+                ans += mid/i;
+                if(ans >= M) break;
             }
+
+            if(ans < M) start = mid + 1;
+            else end = mid;
         }
 
         System.out.println(start);
