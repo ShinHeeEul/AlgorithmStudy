@@ -1,10 +1,3 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.StringTokenizer;
-
 public class Main {
 
 
@@ -18,20 +11,16 @@ public class Main {
     static int N;
     static int M;
     public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        N = read();
+        M = read();
 
         arr = new int[N+1][M+1];
         visit = new int[N+1][M+1];
 
         for(int i = 1; i <= N; i++) {
-            st = new StringTokenizer(br.readLine());
             for(int j = 1; j <= M; j++) {
-                arr[i][j] = Integer.parseInt(st.nextToken());
+                arr[i][j] = read();
             }
         }
 
@@ -41,9 +30,7 @@ public class Main {
             }
         }
 
-        bw.write(dfs(1,1) + "\n");
-        bw.flush();
-        bw.close();
+        System.out.println(dfs(1,1));
     }
 
     private static int dfs(int i, int j) {
