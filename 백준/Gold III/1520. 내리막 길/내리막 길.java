@@ -1,70 +1,78 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int M, N;
-	static int[][] arr, dp;
-	static int[] rangeX = { -1, 0, 1, 0 };
-	static int[] rangeY = { 0, 1, 0, -1 };
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		M = Integer.parseInt(st.nextToken());
-		N = Integer.parseInt(st.nextToken());
+    static int[][] arr;
+    static int[][] visit;
+    static int[][] dir = { {0,1},
+            {0,-1},
+            {1,0},
+            {-1,0}
+    };
+    static int N;
+    static int M;
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-		arr = new int[M + 1][N + 1];
-		for (int i = 1; i <= M; i++) {
-			st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-			for (int j = 1; j <= N; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
+        arr = new int[N+1][M+1];
+        visit = new int[N+1][M+1];
 
-		dp = new int[M + 1][N + 1];
-		for (int i = 1; i <= M; i++) {
-			for (int j = 1; j <= N; j++) {
-				dp[i][j] = -1;
-			}
-		}
+        for(int i = 1; i <= N; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j = 1; j <= M; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
 
-		bw.write(DFS(1, 1) + "\n");
-		bw.flush();
-		bw.close();
-		br.close();
-	}
+        for(int i =1 ; i <= N; i++) {
+            for(int j = 1; j <= M; j++) {
+                visit[i][j] = -1;
+            }
+        }
 
-	public static int DFS(int x, int y) {
-		if (x == M && y == N) {
-			return 1;
-		}
+        bw.write(dfs(1,1) + "\n");
+        bw.flush();
+        bw.close();
+    }
 
-		if (dp[x][y] != -1) {
-			return dp[x][y];
-		}
+    private static int dfs(int i, int j) {
+        if(i == N && j == M) return 1;
 
-		dp[x][y] = 0;
-		for (int i = 0; i < 4; i++) {
-			int dx = x + rangeX[i];
-			int dy = y + rangeY[i];
+        if (visit[i][j] != -1) {
+            return visit[i][j];
+        }
 
-			if (dx < 1 || dy < 1 || dx > M || dy > N) {
-				continue;
-			}
-			
-			if (arr[x][y] > arr[dx][dy]) {
-				dp[x][y] += DFS(dx, dy);
-			}
-		}
+        visit[i][j] = 0;
 
-		return dp[x][y];
-	}
+        for(int k = 0; k < 4; k++) {
+            int x = i + dir[k][0];
+            int y = j + dir[k][1];
 
+            if (x < 1 || y < 1 || x > N || y > M) {
+                continue;
+            }
+
+            if(arr[x][y] < arr[i][j]) visit[i][j] += dfs(x,y);
+        }
+
+        return visit[i][j];
+    }
+
+    private static int read() throws Exception {
+        int d, o = System.in.read() & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+        return o;
+    }
 }
