@@ -1,52 +1,45 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
 public class Main {
 
     static ArrayList<Node>[] list;
     static int[] score;
-    static int min = 100000;
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+    public static void main(String[] args) throws Exception {
+        int N = read();
+        int M = read();
         list = new ArrayList[N+1];
         score = new int[N+1];
         for(int i = 0; i < N + 1; i++) list[i] = new ArrayList<>();
 
         for(int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int A = Integer.parseInt(st.nextToken());
-            int B = Integer.parseInt(st.nextToken());
+            int A = read();
+            int B = read();
             list[A].add(new Node(B));
         }
 
-        for(int i = 1; i <= N; i++) {
-            Topol(i);
-        }
-
-        for(int i = 1; i <= N; i++) System.out.print(score[i] + 1 + " ");
+        for(int i = 1; i <= N; i++) Topol(i);
+        StringBuffer sb = new StringBuffer();
+        for(int i = 1; i <= N; i++) sb.append(score[i] + 1).append(" ");
+        System.out.println(sb.toString());
 
     }
 
     public static void Topol(int i) {
-        for(Node n : list[i]) {
-            score[n.before] = Math.max(score[n.before], score[i] + 1);
-        }
-        min = Math.min(min, score[i]);
+        for(Node n : list[i]) score[n.before] = Math.max(score[n.before], score[i] + 1);
     }
 
     static class Node {
         int before;
-
         public Node(int before) {
             this.before = before;
         }
+    }
+
+    private static int read() throws Exception {
+        int d, o = System.in.read() & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+        return o;
     }
 
 }
