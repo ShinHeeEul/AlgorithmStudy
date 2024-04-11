@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
 
-    static int[] arr;
+    static int[] arr = new int[501];
     static boolean[] visit;
     static int N;
     public static void main(String[] args) throws Exception {
@@ -12,10 +12,9 @@ public class Main {
         while((N= read()) != 0) {
             int M = read();
             bw.write("Case " + cnt + ": ");
-            arr = new int[N + 1];
             for(int i = 1; i <= N; i++) arr[i] = i;
             visit = new boolean[N + 1];
-            while(M --> 0) {
+            for(int i = 0; i < M; i++) {
                 int n1 = read();
                 int n2 = read();
                 union(n1, n2);
