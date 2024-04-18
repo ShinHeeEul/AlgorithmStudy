@@ -32,17 +32,16 @@ public class Main {
             int index = read();
             int xx = dx[index];
             int yy = dy[index];
-            x += xx;
-            y += yy;
-            if(map[y][x] == -1) {
-                x -= xx;
-                y -= yy;
+            int cur = map[y + yy][x + xx];
+            if(cur == -1) {
                 continue;
             }
+            x += xx;
+            y += yy;
             int di = diceIndex[index];
-            if(map[y][x] == 0) map[y][x] = dice[di];
+            if(cur == 0) map[y][x] = dice[di];
             else {
-                dice[di] = map[y][x];
+                dice[di] = cur;
                 map[y][x] = 0;
             }
             diceIndex[index] = getRev(bottomIndex);
