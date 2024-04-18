@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
@@ -6,6 +8,7 @@ public class Main {
     static int[] dy = {2,0,0,-1,1};
     static int[][] map;
     public static void main(String[] args) throws Exception {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = read();
         int M = read();
         int y = read() + 1;
@@ -45,8 +48,10 @@ public class Main {
             diceIndex[index] = getRev(bottomIndex);
             diceIndex[getRevDir(index)] = bottomIndex;
             bottomIndex = di;
-            System.out.println(dice[getRev(bottomIndex)]);
+            bw.write(dice[getRev(bottomIndex)] + "\n");
         }
+        bw.flush();
+        bw.close();
     }
 
     private static int read() throws Exception {
@@ -64,12 +69,6 @@ public class Main {
         return -1;
     }
     private static int getRev(int a) {
-        if(a == 1) return 6;
-        if(a == 2) return 5;
-        if(a == 3) return 4;
-        if(a == 4) return 3;
-        if(a == 5) return 2;
-        if(a == 6) return 1;
-        return -1;
+        return 7 - a;
     }
 }
