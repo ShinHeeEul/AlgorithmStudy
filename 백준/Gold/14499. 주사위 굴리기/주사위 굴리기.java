@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
@@ -8,13 +6,11 @@ public class Main {
     static int[] dy = {2,0,0,-1,1};
     static int[][] map;
     public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int y = Integer.parseInt(st.nextToken()) + 1;
-        int x = Integer.parseInt(st.nextToken()) + 1;
-        int K = Integer.parseInt(st.nextToken());
+        int N = read();
+        int M = read();
+        int y = read() + 1;
+        int x = read() + 1;
+        int K = read();
 
         map = new int[N+2][M+2];
         int[] dice = new int[7];
@@ -24,20 +20,20 @@ public class Main {
         Arrays.fill(map[N+1], -1);
         for(int i = 1; i <= N; i++) {
             Arrays.fill(map[i], -1);
-            st = new StringTokenizer(br.readLine());
             for(int j = 1; j <= M; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
+                map[i][j] = read();
             }
         }
-        st = new StringTokenizer(br.readLine());
         for(int i = 0; i < K; i++) {
             //방향
-            int index = Integer.parseInt(st.nextToken());
-            x += dx[index];
-            y += dy[index];
+            int index = read();
+            int xx = dx[index];
+            int yy = dy[index];
+            x += xx;
+            y += yy;
             if(map[y][x] == -1) {
-                x -= dx[index];
-                y -= dy[index];
+                x -= xx;
+                y -= yy;
                 continue;
             }
             int di = diceIndex[index];
@@ -46,8 +42,6 @@ public class Main {
                 dice[di] = map[y][x];
                 map[y][x] = 0;
             }
-            //다이스 동서남북 // 굴렸을 때
-
             diceIndex[index] = getRev(bottomIndex);
             diceIndex[getRevDir(index)] = bottomIndex;
             bottomIndex = di;
