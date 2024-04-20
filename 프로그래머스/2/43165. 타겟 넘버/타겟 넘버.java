@@ -12,7 +12,9 @@ class Solution {
         while(!stack.isEmpty()) {
             Node n = stack.pop();
             if(n.index == numbers.length-1) {
-                if(target == n.val) answer++;
+                if(target == n.val) {
+                    answer++;
+                }
                 continue;
             }
             stack.push(new Node(n.val + numbers[n.index+1], n.index+1));
