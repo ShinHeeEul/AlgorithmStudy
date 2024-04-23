@@ -1,7 +1,4 @@
-import java.io.*;
-import java.nio.Buffer;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -10,7 +7,6 @@ public class Main {
     static int[] arr;
     static int current;
     static Set<Integer> set;
-    static boolean b;
     public static void main(String[] args) throws Exception {
         int N = read();
         arr = new int[N+1];
@@ -21,7 +17,6 @@ public class Main {
         }
 
         for(int i = 1; i <= N; i++) {
-            b = false;
             if(!visited[i]) {
                 current = i;
                 dfs(i);
@@ -35,25 +30,23 @@ public class Main {
         }
     }
 
-    private static void dfs(int start) {
+    private static boolean dfs(int start) {
         if(visited[start]) {
-            return;
+            return false;
         }
 
         visited[start] = true;
         int a = arr[(start)];
         if(visited[a] && a == current) {
             set.add(start);
-            b = true;
-            return;
+            return true;
         }
-        dfs(a);
-        if(b) {
+        if(dfs(a)) {
             set.add(start);
-            return;
+            return true;
         }
         visited[start] = false;
-
+        return false;
     }
 
     private static int read() throws Exception {
