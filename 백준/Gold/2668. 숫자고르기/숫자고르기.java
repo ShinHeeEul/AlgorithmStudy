@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.Buffer;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,9 +12,7 @@ public class Main {
     static Set<Integer> set;
     static boolean b;
     public static void main(String[] args) throws Exception {
-
         int N = read();
-
         arr = new int[N+1];
         visited = new boolean[N+1];
         set = new LinkedHashSet<>();
@@ -29,7 +28,11 @@ public class Main {
             }
         }
         System.out.println(set.size());
-        set.stream().sorted().forEach(System.out::println);
+        for(int i = 0; i < visited.length; i++) {
+            if(visited[i]) {
+                System.out.println(i);
+            }
+        }
     }
 
     private static void dfs(int start) {
