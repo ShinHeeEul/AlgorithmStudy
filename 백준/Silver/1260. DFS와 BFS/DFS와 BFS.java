@@ -1,69 +1,76 @@
-import java.io.*;
 import java.util.*;
 
 public class Main {
+    static ArrayList<Integer>[] list;
+    static int N;
+    public static void main(String[] args) throws Exception {
+        N = read();
+        int M = read();
+        int V = read();
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        list = new ArrayList[N+1];
 
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int V = Integer.parseInt(st.nextToken());
-
-        int[][] node = new int[N+1][N+1];
-        int[] check = new int[N+1];
-
-        for(int i = 0 ; i< M; i++) {
-            st = new StringTokenizer(br.readLine()," ");
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            node[a][b] = 1;
-            node[b][a] = 1;
+        for(int i = 1; i <= N; i++) {
+            list[i] = new ArrayList<>();
         }
 
-        //시작 위치 : a, 도착 위치 : b
-        //dfs
-
-        int current = V;
-        Stack<Integer> stack = new Stack<>();
-        stack.add(current);
-        while(!stack.isEmpty()) {
-            int tmp = stack.pop();
-            if(check[tmp] == 0) {
-                System.out.print(tmp + " ");
-                check[tmp] = 1;
-            }
-            current = tmp;
-            for(int j = N; j > 0; j--) {
-                if((check[j] == 0) && (node[current][j] == 1)) stack.add(j);
-            }
+        for(int i = 0; i < M; i++) {
+            int from = read();
+            int to = read();
+            list[from].add(to);
+            list[to].add(from);
         }
 
+        dfs(V);
         System.out.println();
-
-       //bfs
-       current = V;
-       check = new int[N+1];
-       Queue<Integer> queue = new LinkedList<>();
-       queue.add(current);
-        while(!queue.isEmpty()) {
-            int tmp = queue.poll();
-            if(check[tmp] == 0) {
-                System.out.print(tmp + " ");
-                check[tmp] = 1;
-            }
-            current = tmp;
-            for(int j = 1; j < N+1; j++) {
-                if((check[j] == 0) && (node[current][j] == 1)) queue.add(j);
-            }
-
-        }
-
-
-        bw.flush();
-        bw.close();
+        bfs(V);
     }
 
+    public static void dfs(int a) {
+        boolean[] visited = new boolean[N+1];
+        Stack<Integer> stack = new Stack<>();
+
+        stack.push(a);
+
+        while(!stack.isEmpty()) {
+            int pop = stack.pop();
+
+            if(visited[pop]) continue;
+            visited[pop] = true;
+            System.out.print(pop + " ");
+            Collections.sort(list[pop], Collections.reverseOrder());
+            for(int i : list[pop]) {
+                    stack.push(i);
+            }
+        }
+    }
+
+    public static void bfs(int a) {
+        boolean[] visited = new boolean[N+1];
+        Queue<Integer> queue = new LinkedList<>();
+
+        queue.add(a);
+        visited[a] = true;
+
+        while(!queue.isEmpty()) {
+            int pop = queue.poll();
+            System.out.print(pop + " ");
+
+            Collections.sort(list[pop]);
+            for(int i : list[pop]) {
+                if(!visited[i]) {
+                    visited[i] = true;
+                    queue.add(i);
+                }
+            }
+        }
+
+    }
+
+    private static int read() throws Exception {
+        int d, o = System.in.read() & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+        return o;
+    }
 }
