@@ -1,9 +1,14 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.*;
 
 public class Main {
-    static ArrayList<Integer>[] list;
+    static List<Integer>[] list;
     static int N;
+    static BufferedWriter bw;
     public static void main(String[] args) throws Exception {
+        bw = new BufferedWriter(new OutputStreamWriter(System.out));
         N = read();
         int M = read();
         int V = read();
@@ -14,6 +19,7 @@ public class Main {
             list[i] = new ArrayList<>();
         }
 
+
         for(int i = 0; i < M; i++) {
             int from = read();
             int to = read();
@@ -21,12 +27,17 @@ public class Main {
             list[to].add(from);
         }
 
+        for(int i = 1; i <= N; i++) {
+            Collections.sort(list[i]);
+        }
+
         dfs(V);
-        System.out.println();
+        bw.write("\n");
         bfs(V);
+        bw.flush();
     }
 
-    public static void dfs(int a) {
+    public static void dfs(int a) throws IOException {
         boolean[] visited = new boolean[N+1];
         Stack<Integer> stack = new Stack<>();
 
@@ -37,15 +48,15 @@ public class Main {
 
             if(visited[pop]) continue;
             visited[pop] = true;
-            System.out.print(pop + " ");
-            Collections.sort(list[pop], Collections.reverseOrder());
-            for(int i : list[pop]) {
-                    stack.push(i);
+            bw.write(pop + " ");
+            int size = list[pop].size();
+            for(int i = size-1; i >= 0; i--) {
+                stack.push(list[pop].get(i));
             }
         }
     }
 
-    public static void bfs(int a) {
+    public static void bfs(int a) throws IOException {
         boolean[] visited = new boolean[N+1];
         Queue<Integer> queue = new LinkedList<>();
 
@@ -54,9 +65,7 @@ public class Main {
 
         while(!queue.isEmpty()) {
             int pop = queue.poll();
-            System.out.print(pop + " ");
-
-            Collections.sort(list[pop]);
+            bw.write(pop + " ");
             for(int i : list[pop]) {
                 if(!visited[i]) {
                     visited[i] = true;
