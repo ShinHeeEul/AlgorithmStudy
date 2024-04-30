@@ -1,16 +1,16 @@
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Main {
 
+    static Node[] nodes;
+    static PriorityQueue<Node>[] pqs;
+    static int N;
     public static void main(String[] args) throws Exception {
-        int N = read();
-        Node[] nodes = new Node[N];
-        PriorityQueue<Node>[] pqs = new PriorityQueue[N];
-        int[] arr = new int[N+1];
+        N = read();
+        nodes = new Node[N];
+        pqs = new PriorityQueue[N];
         for(int i = 0; i < N; i++) {
             int A = read();
             int B = read();
@@ -20,7 +20,37 @@ public class Main {
 
         Arrays.sort(nodes, Comparator.comparingInt(o -> o.A));
 
-        int index = 0;
+        int index = binarySearch(0);
+
+        StringBuilder sb = new StringBuilder();
+        int count = N - (index + 1);
+        sb.append(count);
+        int before = pqs[index].peek().A;
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i = index; i >= 0; i--) {
+            boolean b = true;
+            int tmp = 0;
+            while(!pqs[i].isEmpty()) {
+                int A = pqs[i].poll().A;
+                if(b && before >= A) {
+                    b = false;
+                    tmp = A;
+                    continue;
+                }
+                pq.add(A);
+            }
+            before = tmp;
+        }
+
+        while(!pq.isEmpty()) {
+            sb.append("\n").append(pq.poll());
+        }
+        System.out.println(sb);
+    }
+
+    private static int binarySearch(int index) {
+        int[] arr = new int[N+1];
+
         for(int i = 0; i < nodes.length; i++) {
             Node node = nodes[i];
             int B = node.B;
@@ -46,34 +76,8 @@ public class Main {
             arr[end] = B;
             pqs[end].add(node);
         }
-        StringBuilder sb = new StringBuilder();
-        int count = N - (index + 1);
-        sb.append(count);
-        int before = pqs[index].peek().A;
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for(int i = index; i >= 0; i--) {
-            boolean b = true;
-            int tmp = 0;
-            while(!pqs[i].isEmpty()) {
-                int A = pqs[i].poll().A;
-                if(before < A) {
-                    pq.add(A);
-                    continue;
-                }
-                if(b) {
-                    b = false;
-                    tmp = A;
-                    continue;
-                }
-                pq.add(A);
-            }
-            before = tmp;
-        }
 
-        while(!pq.isEmpty()) {
-            sb.append("\n").append(pq.poll());
-        }
-        System.out.println(sb);
+        return index;
     }
     private static int read() throws Exception {
         int d, o = System.in.read() & 15;
