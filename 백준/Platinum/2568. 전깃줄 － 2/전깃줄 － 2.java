@@ -10,13 +10,12 @@ public class Main {
         int N = read();
         Node[] nodes = new Node[N];
         PriorityQueue<Node>[] pqs = new PriorityQueue[N];
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int[] arr = new int[N+1];
         for(int i = 0; i < N; i++) {
             int A = read();
             int B = read();
             nodes[i] = new Node(A,B);
-            pqs[i] = new PriorityQueue<Node>(Comparator.comparingInt(o -> -o.A));
+            pqs[i] = new PriorityQueue<>(Comparator.comparingInt(o -> -o.A));
         }
 
         Arrays.sort(nodes, Comparator.comparingInt(o -> o.A));
@@ -30,8 +29,7 @@ public class Main {
                 pqs[0].add(node);
                 continue;
             }
-            int current = arr[index];
-            if(current < B) {
+            if(arr[index] < B) {
                 index++;
                 arr[index] = B;
                 pqs[index].add(node);
@@ -48,9 +46,9 @@ public class Main {
             arr[end] = B;
             pqs[end].add(node);
         }
-
+        StringBuilder sb = new StringBuilder();
         int count = N - (index + 1);
-        bw.write(count + "");
+        sb.append(count);
         int before = pqs[index].peek().A;
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for(int i = index; i >= 0; i--) {
@@ -73,10 +71,9 @@ public class Main {
         }
 
         while(!pq.isEmpty()) {
-            bw.write("\n" + pq.poll());
+            sb.append("\n").append(pq.poll());
         }
-        bw.flush();
-        bw.close();
+        System.out.println(sb);
     }
     private static int read() throws Exception {
         int d, o = System.in.read() & 15;
