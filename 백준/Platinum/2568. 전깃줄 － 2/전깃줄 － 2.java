@@ -1,27 +1,21 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.StringTokenizer;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine().trim());
+        int N = read();
         Node[] nodes = new Node[N];
         PriorityQueue<Node>[] pqs = new PriorityQueue[N];
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int[] arr = new int[N+1];
         int max = 0;
         for(int i = 0; i < N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int A = Integer.parseInt(st.nextToken());
-            int B = Integer.parseInt(st.nextToken());
+            int A = read();
+            int B = read();
             nodes[i] = new Node(A,B);
             max = Math.max(A,max);
             pqs[i] = new PriorityQueue<Node>(Comparator.comparingInt(o -> -o.A));
@@ -91,9 +85,8 @@ public class Main {
     }
     private static int read() throws Exception {
         int d, o = System.in.read() & 15;
-        while ((d = System.in.read()) <= 32) continue;
-
-        o = (o << 3) + (o << 1) + (d & 15);
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
         return o;
     }
 
