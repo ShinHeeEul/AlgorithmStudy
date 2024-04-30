@@ -12,12 +12,10 @@ public class Main {
         PriorityQueue<Node>[] pqs = new PriorityQueue[N];
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int[] arr = new int[N+1];
-        int max = 0;
         for(int i = 0; i < N; i++) {
             int A = read();
             int B = read();
             nodes[i] = new Node(A,B);
-            max = Math.max(A,max);
             pqs[i] = new PriorityQueue<Node>(Comparator.comparingInt(o -> -o.A));
         }
 
@@ -44,11 +42,8 @@ public class Main {
             int end = index;
             while(start < end) {
                 int mid = (start + end) >>> 1;
-                if(arr[mid] < B) {
-                    start = mid + 1;
-                } else {
-                    end = mid;
-                }
+                if(arr[mid] < B) start = mid + 1;
+                else end = mid;
             }
             arr[end] = B;
             pqs[end].add(node);
@@ -62,17 +57,17 @@ public class Main {
             boolean b = true;
             int tmp = 0;
             while(!pqs[i].isEmpty()) {
-                Node node = pqs[i].poll();
-                if(before < node.A) {
-                    pq.add(node.A);
+                int A = pqs[i].poll().A;
+                if(before < A) {
+                    pq.add(A);
                     continue;
                 }
                 if(b) {
                     b = false;
-                    tmp = node.A;
+                    tmp = A;
                     continue;
                 }
-                pq.add(node.A);
+                pq.add(A);
             }
             before = tmp;
         }
