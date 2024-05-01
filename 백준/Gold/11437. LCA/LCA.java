@@ -15,9 +15,7 @@ public class Main {
         lists = new ArrayList[N+1];
         stack = new Stack<>();
         visited = new boolean[N+1];
-        for(int i = 1; i <= N ;i++) {
-            lists[i] = new ArrayList<>();
-        }
+        for(int i = 1; i <= N ;i++) lists[i] = new ArrayList<>();
 
         for(int i = 1; i < N; i++) {
             int a = read();
@@ -31,12 +29,15 @@ public class Main {
         dfs(1, 1, 1);
 
         int M = read();
+        StringBuffer sb = new StringBuffer();
 
         for(int i = 0; i < M; i++) {
             int a = read();
             int b = read();
-            System.out.println(find(nodes[a], nodes[b]));
+            sb.append(find(nodes[a], nodes[b])).append("\n");
         }
+
+        System.out.println(sb);
     }
 
     private static void dfs(int start, int depth, int parent) {
@@ -46,19 +47,9 @@ public class Main {
             visited[i] = true;
             dfs(i, depth + 1, start);
             visited[i] = false;
-
         }
     }
 
-    private static void union(Node x, Node y) {
-        if(x.depth < y.depth) {
-            y.depth = x.depth + 1;
-            nodes[x.value] = y;
-            return;
-        }
-        x.depth = y.depth + 1;
-        nodes[y.value] = x;
-    }
     private static int find(Node x, Node y) {
         if(x.value == y.value) {
             return x.value;
