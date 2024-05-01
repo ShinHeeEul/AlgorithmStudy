@@ -29,7 +29,7 @@ public class Main {
         dfs(1, 1, 1);
 
         int M = read();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < M; i++) {
             int a = read();
