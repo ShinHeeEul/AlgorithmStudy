@@ -1,7 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-
 public class Main {
     public static void main(String[] args) throws Exception {
         long Q = read();
@@ -27,7 +23,7 @@ public class Main {
                 if(arr[j + 1] + next > 0) max = Math.max(max, j + 1);
             }
             if(arr[0] == 0 && max == 0) before = 0;
-            else before = Double.valueOf(Math.pow(2, max)).longValue();
+            else before = (long) Math.pow(2,max);
             sb.append(before).append("\n");
         }
         System.out.println(sb);
