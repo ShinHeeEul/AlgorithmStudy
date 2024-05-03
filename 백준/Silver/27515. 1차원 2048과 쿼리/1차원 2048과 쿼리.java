@@ -11,14 +11,14 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         long before = 0;
         for(int i = 0; i < Q; i++) {
-            char c = (char) System.in.read();
+            int change = System.in.read() == 43? 1: -1;
             long l = read();
-            if(l == 0) {
+            if(l == 0L) {
                 sb.append(before).append("\n");
                 continue;
             }
             int index = (int) (Math.log((double) l) / log2);
-            arr[index] += (c=='+'?1 : -1);
+            arr[index] += change;
 
             int max = 0;
             int next = 0;
@@ -28,7 +28,6 @@ public class Main {
             }
             if(arr[0] == 0 && max == 0) before = 0;
             else before = Double.valueOf(Math.pow(2, max)).longValue();
-
             sb.append(before).append("\n");
         }
         System.out.println(sb);
