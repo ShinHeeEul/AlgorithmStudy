@@ -1,16 +1,22 @@
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+
 public class Main {
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
     public static void main(String[] args) throws Exception {
+
         long Q = read();
         int N = 63;
         int[] arr = new int[N];
         double log2 = Math.log(2);
-        StringBuilder sb = new StringBuilder();
         long before = 0;
         for(int i = 0; i < Q; i++) {
             int change = System.in.read() == 43? 1: -1;
             long l = read();
             if(l == 0L) {
-                sb.append(before).append("\n");
+                bw.write(Long.toString(before));
+                bw.write("\n");
                 continue;
             }
             int index = (int) (Math.log((double) l) / log2);
@@ -24,9 +30,11 @@ public class Main {
             }
             if(arr[0] == 0 && max == 0) before = 0;
             else before = (long) Math.pow(2,max);
-            sb.append(before).append("\n");
+            bw.write(Long.toString(before));
+            bw.write("\n");
         }
-        System.out.println(sb);
+        bw.flush();
+        bw.close();
     }
     private static long read() throws Exception {
         long d, o = System.in.read() & 15;
