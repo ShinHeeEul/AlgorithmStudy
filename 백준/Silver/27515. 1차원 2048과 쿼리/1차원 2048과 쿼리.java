@@ -28,7 +28,7 @@ public class Main {
                 next = (arr[j] + next) >> 1;
                 if(arr[j + 1] + next > 0) max = Math.max(max, j + 1);
             }
-            if(arr[0] == 0 && max == 0) before = 0;
+            if((arr[0] | max) == 0) before = 0;
             else before = (long) Math.pow(2,max);
             bw.write(Long.toString(before));
             bw.write("\n");
