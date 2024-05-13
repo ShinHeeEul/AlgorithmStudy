@@ -1,15 +1,12 @@
 import java.util.*;
 
 public class Main {
-    static Node start;
-    static Node end;
-    static HashMap<Node, Boolean> map = new HashMap<>();
+    static int Istart = 0;
+    static int Iend = 0;
+    static int zero = 0;
+    static HashMap<Integer, Boolean> map = new HashMap<>();
     static Queue<Node> queue;
     public static void main(String[] args) throws Exception {
-
-        int Istart = 0;
-        int Iend = 0;
-        int zero = 0;
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
                 Istart *= 10;
@@ -24,8 +21,6 @@ public class Main {
             }
         }
         Iend -= Iend % 10;
-        start = new Node(Istart, 0, zero);
-        end = new Node(Iend, 0, 0);
 
         bfs();
 
@@ -33,14 +28,14 @@ public class Main {
 
     private static void bfs() {
         queue = new LinkedList<>();
-
+        Node start = new Node(Istart, 0, zero);
         queue.add(start);
-        map.put(start, true);
+        map.put(Istart, true);
 
         while(!queue.isEmpty()) {
             Node node = queue.poll();
 
-            if(node.equals(end)) {
+            if(node.r == Iend) {
                 System.out.println(node.count);
                 return;
             }
@@ -106,23 +101,22 @@ public class Main {
 
 
     private static Optional<Node> switchPosition(Node node, int x, int y) {
-        Node n = new Node(node.r, node.count + 1, y);
-        String s = n.r + "";
-        if(n.r < 100_000_000) s = "0" + s;
 
-        char[] cc = s.toCharArray();
+        int r = node.r;
+        int xx = (int)Math.pow(10, 9 - x);
+        int yy = (int)Math.pow(10, 9 - y);
+        int tempY = (r / yy) % 10;
 
-        char tmp = cc[x-1];
-        cc[x-1] = cc[y-1];
-        cc[y-1] = tmp;
+        int newX = r + tempY * xx - tempY * yy;
 
-        n.r = Integer.parseInt(new String(cc));
 
-        if(map.getOrDefault(n, false)) return Optional.empty();
-        map.put(n, true);
+        if(map.getOrDefault(newX, false)) return Optional.empty();
+        map.put(newX, true);
 
+        Node n = new Node(newX, node.count + 1, y);
         return Optional.of(n);
     }
+
 
     private static class Node {
         int r;
@@ -135,16 +129,6 @@ public class Main {
             this.zero = zero;
             this.count = count;
         }
-        @Override
-        public int hashCode() {
-            return r;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            Node node = (Node) obj;
-            return node.r == this.r;
-        }
     }
 
     private static int read() throws Exception {
@@ -154,4 +138,3 @@ public class Main {
         return o;
     }
 }
-
