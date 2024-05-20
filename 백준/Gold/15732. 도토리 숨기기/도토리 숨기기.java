@@ -24,12 +24,13 @@ public class Main {
 
         while(start < end) {
             int mid = (start + end) / 2;
-
             long sum = 0;
+
             for(int i = 0; i < K; i++) {
                 int[] rule = rules[i];
-                if(rule[0] <= mid ) {
-                    sum += (Math.min(mid, rule[1]) - rule[0]) / rule[2] + 1;
+                int rule0 = rule[0];
+                if(rule0 <= mid ) {
+                    sum += (Math.min(mid, rule[1]) - rule0) / rule[2] + 1;
                 }
             }
             if(sum >= D) {
