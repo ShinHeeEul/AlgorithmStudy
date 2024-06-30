@@ -12,20 +12,18 @@ public class Main {
 
         int size = 1;
         while(size < N) {
-            size *= 2;
+            size <<= 1;
         }
-        long[] segment = new long[size*2+2];
+        long[] segment = new long[(size<< 1)+2];
 
         for(int m = 0; m < M ;m++) {
             int a = read();
             int i = read();
             int j = read();
-            
+
             if(a == 0) {
                 int min = Math.min(i,j);
                 int max = Math.max(i,j);
-                i = min;
-                j = max;
                 Queue<Node> queue = new LinkedList<>();
 
                 queue.add(new Node(1, size, 2));
@@ -37,17 +35,17 @@ public class Main {
                     int end = node.end;
                     int value = node.value;
 
-                    if(start >= i && end <= j) {
+                    if(start >= min && end <= max) {
                         sum += segment[value];
                         continue;
                     }
 
-                    int mid = (start + end) /2 ;
-                    if(j > mid) {
-                        queue.add(new Node(mid + 1, end, node.value * 2));
+                    int mid = (start + end) >> 1;
+                    if(max > mid) {
+                        queue.add(new Node(mid + 1, end, node.value << 1));
                     }
-                    if(i <= mid) {
-                        queue.add(new Node(start, mid, node.value * 2-1));
+                    if(min <= mid) {
+                        queue.add(new Node(start, mid, (node.value << 1)-1));
                     }
                 }
                 bw.write(sum + "\n");
@@ -78,7 +76,7 @@ public class Main {
     }
 
     private static int ceilDiv(int a) {
-        return (a + 1) / 2;
+        return (a + 1) >> 1;
     }
     private static int read() throws Exception {
         int d, o = System.in.read() & 15;
