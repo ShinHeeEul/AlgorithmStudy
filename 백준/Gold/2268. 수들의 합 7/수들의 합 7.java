@@ -1,5 +1,5 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 
 public class Main {
 
@@ -7,9 +7,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
         int N = read();
         int M = read();
-        StringBuilder sb = new StringBuilder();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int size = 1 << 20;
+        int size = 1;
         while(size < N) {
             size <<= 1;
         }
@@ -24,7 +24,7 @@ public class Main {
                 int min = Math.min(i,j);
                 int max = Math.max(i,j);
                 long sum = query(min, max, 2,1, size);
-                sb.append(sum).append("\n");
+                bw.write(sum + "\n");
                 continue;
             }
             int index = i + size;
@@ -35,17 +35,20 @@ public class Main {
                 index = ceilDiv(index);
             }
         }
-        System.out.println(sb);
+        bw.flush();
 
     }
 
     private static long query(int left, int right, int node, int start, int end) {
+        // 범위 밖일 때??
         if (left > end || right < start) {
             return 0;
         }
+        // 범위 안 일 떈 그 범위인 값 반환
         if (left <= start && end <= right) {
             return segment[node];
         }
+        
         int mid = (start + end) / 2;
         return query(left, right, node * 2 - 1, start, mid) + query(left, right, node * 2, mid + 1, end);
     }
