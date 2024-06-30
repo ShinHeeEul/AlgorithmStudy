@@ -1,21 +1,19 @@
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Main {
 
+    static long[] segment;
     public static void main(String[] args) throws Exception {
         int N = read();
         int M = read();
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
         int size = 1 << 20;
         while(size < N) {
             size <<= 1;
         }
-        long[] segment = new long[(size << 1) + 2];
+        segment = new long[(size << 1) + 2];
 
         for(int m = 0; m < M; m++) {
             int a = read();
@@ -25,30 +23,7 @@ public class Main {
             if(a == 0) {
                 int min = Math.min(i,j);
                 int max = Math.max(i,j);
-                Queue<Node> queue = new LinkedList<>();
-
-                queue.add(new Node(1, size, 2));
-
-                long sum = 0;
-                while(!queue.isEmpty()) {
-                    Node node = queue.poll();
-                    int start = node.start;
-                    int end = node.end;
-                    int value = node.value;
-
-                    if(start >= min && end <= max) {
-                        sum += segment[value];
-                        continue;
-                    }
-
-                    int mid = (start + end) >> 1;
-                    if(max > mid) {
-                        queue.add(new Node(mid + 1, end, node.value << 1));
-                    }
-                    if(min <= mid) {
-                        queue.add(new Node(start, mid, (node.value << 1)-1));
-                    }
-                }
+                long sum = query(min, max, 2,1, size);
                 sb.append(sum).append("\n");
                 continue;
             }
@@ -61,24 +36,25 @@ public class Main {
             }
         }
         System.out.println(sb);
-        
+
     }
 
-    private static class Node {
-        int start;
-        int end;
-        int value;
-
-        public Node(int start, int end, int value) {
-            this.start = start;
-            this.end = end;
-            this.value = value;
+    private static long query(int left, int right, int node, int start, int end) {
+        if (left > end || right < start) {
+            return 0;
         }
+        if (left <= start && end <= right) {
+            return segment[node];
+        }
+        int mid = (start + end) / 2;
+        return query(left, right, node * 2 - 1, start, mid) + query(left, right, node * 2, mid + 1, end);
     }
+
 
     private static int ceilDiv(int a) {
         return (a + 1) >> 1;
     }
+
     private static int read() throws Exception {
         int d, o = System.in.read() & 15;
         while ((d = System.in.read()) > 32)
