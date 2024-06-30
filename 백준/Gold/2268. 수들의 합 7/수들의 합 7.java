@@ -9,14 +9,15 @@ public class Main {
         int N = read();
         int M = read();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-        int size = 1;
+        int size = 1 << 20;
         while(size < N) {
             size <<= 1;
         }
-        long[] segment = new long[(size<< 1)+2];
+        long[] segment = new long[(size << 1) + 2];
 
-        for(int m = 0; m < M ;m++) {
+        for(int m = 0; m < M; m++) {
             int a = read();
             int i = read();
             int j = read();
@@ -48,7 +49,7 @@ public class Main {
                         queue.add(new Node(start, mid, (node.value << 1)-1));
                     }
                 }
-                bw.write(sum + "\n");
+                sb.append(sum).append("\n");
                 continue;
             }
             int index = i + size;
@@ -59,7 +60,7 @@ public class Main {
                 index = ceilDiv(index);
             }
         }
-        bw.flush();
+        System.out.println(sb);
         
     }
 
