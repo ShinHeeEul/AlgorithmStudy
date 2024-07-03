@@ -16,7 +16,6 @@ public class Main {
         for (int i = 1; i <= N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
-
         st = new StringTokenizer(br.readLine());
         bfs(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
 
@@ -60,20 +59,10 @@ public class Main {
 
 
     private static int read() throws Exception {
-        int d, o;
-        boolean negative = false;
-        d = System.in.read();
-
-        if (d == '-') {
-            negative = true;
-            d = System.in.read();
-        }
-        o = d & 15;
-
+        int d, o = System.in.read() & 15;
         while ((d = System.in.read()) > 32)
             o = (o << 3) + (o << 1) + (d & 15);
-
-        return negative? -o:o;
+        return o;
     }
 
 }
