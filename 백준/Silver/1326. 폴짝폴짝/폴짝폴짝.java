@@ -8,10 +8,12 @@ public class Main {
 
 
     static int[] arr;
+    static boolean[] visited;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         arr = new int[N+1];
+        visited = new boolean[N+1];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
@@ -27,9 +29,12 @@ public class Main {
 
         while(!queue.isEmpty()) {
             Node n = queue.poll();
+
             int index = n.index;
-            int nCount = n.count;
             if(index >= arr.length || index <= 0) continue;
+            if(visited[index]) continue;
+            visited[index] = true;
+            int nCount = n.count;
             int val = arr[index];
             if(index == b) {
                 System.out.println(nCount);
