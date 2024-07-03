@@ -27,13 +27,14 @@ public class Main {
         Queue<Node> queue = new LinkedList<>();
         queue.add(new Node(a, 0));
 
+        visited[a] = true;
+
         while(!queue.isEmpty()) {
             Node n = queue.poll();
 
             int index = n.index;
             if(index >= arr.length || index <= 0) continue;
-            if(visited[index]) continue;
-            visited[index] = true;
+
             int nCount = n.count;
             int val = arr[index];
             if(index == b) {
@@ -41,11 +42,24 @@ public class Main {
                 return;
             }
 
-            int cnt = 0;
-            while((index + val * cnt) < arr.length || (index - val * cnt) > 0) {
-                cnt++;
-                queue.add(new Node(index + val * cnt, nCount + 1));
-                queue.add(new Node(index - val * cnt, nCount + 1));
+            int plus = index;
+            int minus = index;
+            while(plus < arr.length || minus > 0) {
+
+                plus += val;
+                minus -= val;
+                if(plus < arr.length) {
+                    if(!visited[plus])  {
+                        queue.add(new Node(plus, nCount + 1));
+                        visited[plus] = true;
+                    }
+                }
+                if(minus > 0) {
+                    if(!visited[minus])  {
+                        queue.add(new Node(minus, nCount + 1));
+                        visited[minus] = true;
+                    }
+                }
             }
         }
 
