@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.StringTokenizer;
 
 public class Main {
     static long[] segment;
@@ -29,7 +28,7 @@ public class Main {
 
         int M = read();
 
-        while(M-->0) {
+        for(int i = 0; i < M ;i++) {
             int a = read();
             if(a == 2) {
                 int node = read();
@@ -71,6 +70,7 @@ public class Main {
         if(right < start || left > end) {
             return;
         }
+
         if(left <= start && end <= right) {
             return;
         }
