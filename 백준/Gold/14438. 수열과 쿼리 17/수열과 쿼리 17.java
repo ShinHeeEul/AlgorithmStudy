@@ -65,8 +65,8 @@ public class Main {
             return segment[node];
         }
 
-        int mid = (start + end) / 2;
-        return Math.min(query(left, right, node * 2 - 1, start, mid), query(left, right, node * 2, mid + 1, end));
+        int mid = (start + end) >> 1;
+        return Math.min(query(left, right, (node << 1) - 1, start, mid), query(left, right, node << 1, mid + 1, end));
 
     }
 
