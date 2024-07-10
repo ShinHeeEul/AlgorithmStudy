@@ -1,13 +1,10 @@
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
 public class Main {
 
-    private static long[] segment;
+    private static int[] segment;
     private static int size;
     public static void main(String[] args) throws Exception {
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = read();
 
         size = 1;
@@ -16,9 +13,9 @@ public class Main {
             size <<= 1;
         }
 
-        segment = new long[(size << 1) + 1];
+        segment = new int[(size << 1) + 1];
 
-        Arrays.fill(segment, Long.MAX_VALUE);
+        Arrays.fill(segment, Integer.MAX_VALUE);
 
         for(int i = size + 1; i < size + N + 1; i++) {
             segment[i] = read();
@@ -30,8 +27,8 @@ public class Main {
             segment[(segmentSize + 1) >> 1] = Math.min(segment[segmentSize], segment[segmentSize - 1]);
             segmentSize -= 2;
         }
-
         int M = read();
+        StringBuilder sb = new StringBuilder();
         for(int idx = 0; idx < M ; idx++) {
             int a = read();
             if(a == 1) {
@@ -43,12 +40,9 @@ public class Main {
 
             int i = read();
             int j = read();
-            long ans = query(i, j, 2, 1, size);
-            bw.write(ans + "\n");
-
+            sb.append(query(i, j, 2, 1, size)).append("\n");
         }
-
-        bw.flush();
+        System.out.print(sb);
     }
 
     private static void update(int i, int v) {
@@ -61,10 +55,10 @@ public class Main {
         }
     }
 
-    private static long query(int left, int right, int node, int start, int end) {
+    private static int query(int left, int right, int node, int start, int end) {
 
         if(left > end || right < start) {
-            return Long.MAX_VALUE;
+            return Integer.MAX_VALUE;
         }
 
         if(left <= start && end <= right) {
