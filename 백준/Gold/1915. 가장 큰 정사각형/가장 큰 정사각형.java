@@ -10,7 +10,7 @@ public class Main {
         boolean b = false;
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= M; j++) {
-                int a = System.in.read() - '0';
+                int a = System.in.read() - 48;
                 if (a == 1) b = true;
                 box[i][j] = a;
                 if (box[i - 1][j] >= 1 && box[i][j - 1] >= 1 && box[i - 1][j - 1] >= 1 && box[i][j] >= 1) {
@@ -29,7 +29,7 @@ public class Main {
         int d, o;
         boolean negative = false;
         d = System.in.read();
-        if (d == '-') {
+        if (d == 45) {
             negative = true;
             d = System.in.read();
         }
