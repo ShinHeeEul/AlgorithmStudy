@@ -7,7 +7,7 @@ public class Main {
 
     static int N;
     static int K;
-    static long[] segments;
+    static int[] segments;
     static int size;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,7 +23,7 @@ public class Main {
                 size <<= 1;
             }
 
-            segments = new long[(size << 1) + 1];
+            segments = new int[(size << 1) + 1];
             Arrays.fill(segments, 1);
 
             st = new StringTokenizer(br.readLine());
@@ -54,7 +54,7 @@ public class Main {
                 if (c == 'C') {
                     update(a, b);
                 } else {
-                   long ans =  query(a, b, 2, 1, size);
+                   int ans =  query(a, b, 2, 1, size);
                    if(ans < 0) {
                        sb.append("-");
                    } else if(ans > 0) {
@@ -82,11 +82,10 @@ public class Main {
         while(segmentSize > 1) {
             segmentSize = (segmentSize + 1) >> 1;
             segments[segmentSize] = segments[segmentSize << 1] * segments[(segmentSize << 1) - 1];
-
         }
     }
 
-    private static long query(int left, int right, int node, int start, int end) {
+    private static int query(int left, int right, int node, int start, int end) {
         if(left > end || right < start) {
             return 1;
         }
