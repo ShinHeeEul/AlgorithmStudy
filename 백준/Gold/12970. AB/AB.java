@@ -7,23 +7,22 @@ public class Main {
         int bNum = (N + 1) / 2;
         int aNum = N / 2;
         int max = bNum * aNum;
-        
+
         if(K > max) {
             System.out.println(-1);
             return;
         }
 
         StringBuilder sb = new StringBuilder();
-        int count = 0;
         for(int i = bNum; i > 0; i--) {
             int t = K / i;
             sb.append("A".repeat(t));
-            count += t;
+            aNum -= t;
             K %= i;
             sb.append("B");
         }
-        
-        sb.append("A".repeat(aNum - count));
+
+        sb.append("A".repeat(aNum));
 
         System.out.println(sb);
 
