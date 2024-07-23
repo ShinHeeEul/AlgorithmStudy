@@ -1,28 +1,29 @@
 import org.w3c.dom.Node;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.StringTokenizer;
 
 public class Main {
 
     static int[] segment;
     static int N;
     static int size;
-    static LinkedHashMap<Integer, Node> map = new LinkedHashMap<>();
+    static LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
 
     public static void main(String[] args) throws Exception {
         N = read();
 
         for(int i = 1; i <= N; i++) {
             int a = read();
-            map.put(a, new Node(i, -1, a));
+            map.put(a, -1);
         }
 
         for(int i = 1; i <= N; i++) {
             int val = read();
-            Node node = map.get(val);
-            node.b = i;
-            map.put(val, node);
+            map.put(val, i);
         }
 
         size = 1;
@@ -34,8 +35,7 @@ public class Main {
         segment = new int[(size << 1) + 1];
 
         long sum = 0;
-        for(Node node : map.values()) {
-            int b = node.b;
+        for(int b : map.values()) {
             sum += query(b,N,2,1, size);
             update(b);
         }
@@ -44,7 +44,6 @@ public class Main {
     }
 
     private static long query(int left, int right, int node, int start, int end) {
-
         if(left > end || right < start) {
             return 0;
         }
@@ -53,7 +52,7 @@ public class Main {
            return segment[node];
         }
 
-        int mid = (start + end) / 2;
+        int mid = (start + end) >> 1;
         return query(left, right, (node << 1) - 1, start, mid) + query(left, right, node << 1, mid + 1, end);
     }
 
@@ -63,19 +62,6 @@ public class Main {
         while(segmentSize > 1) {
             segment[segmentSize] += 1;
             segmentSize = (segmentSize + 1) >> 1;
-        }
-
-    }
-
-    private static class Node {
-        int a;
-        int b;
-        int val;
-
-        public Node(int a, int b, int val) {
-            this.a = a;
-            this.b = b;
-            this.val = val;
         }
     }
 
