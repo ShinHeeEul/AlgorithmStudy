@@ -9,9 +9,10 @@ class Solution {
         boolean isZero = true;
         while(!pq.isEmpty()) {
             int a = pq.poll().val;
-            if(a != 0) isZero = false;
             answer += a;
-            
+            if(a != 0) {
+                isZero = false;
+            }
         }
         if(isZero) answer = "0";
         return answer;
