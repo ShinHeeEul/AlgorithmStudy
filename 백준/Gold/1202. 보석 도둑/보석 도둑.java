@@ -3,7 +3,6 @@ import java.util.PriorityQueue;
 
 public class Main {
 
-
     static Jewel[] arr;
     static Jewel[] segments;
     static int size;
@@ -25,9 +24,7 @@ public class Main {
         }
 
         arr[N] = new Jewel(Integer.MAX_VALUE, Integer.MAX_VALUE);
-
         Arrays.sort(arr);
-
 
         segments = new Jewel[(size << 1) + 1];
         Arrays.fill(segments, new Jewel(0,0));
@@ -38,12 +35,11 @@ public class Main {
         }
 
         int segmentSize = segments.length-1;
+
         while(segmentSize > 1) {
-            if(segments[segmentSize].val > segments[segmentSize - 1].val) {
-                segments[(segmentSize + 1) >> 1] = segments[segmentSize];
-            } else {
-                segments[(segmentSize + 1) >> 1] = segments[segmentSize - 1];
-            }
+            int a = (segmentSize + 1) >> 1;
+            if(segments[segmentSize].val > segments[segmentSize - 1].val) segments[a] = segments[segmentSize];
+            else segments[a] = segments[segmentSize - 1];
             segmentSize -= 2;
         }
 
@@ -53,6 +49,7 @@ public class Main {
         for(int i = 0; i < K; i++) {
             pq.add(read());
         }
+
         while(!pq.isEmpty()) {
             int weight = pq.poll();
             int index = binarySearch(weight);
@@ -61,19 +58,17 @@ public class Main {
             ans += jewel.val;
             update(jewel.index);
         }
+
         System.out.println(ans);
     }
 
     private static void update(int segmentSize) {
-
         segments[segmentSize] = new Jewel(0,0);
+
         while(segmentSize > 1) {
             segmentSize = (segmentSize + 1) >> 1;
-            if(segments[segmentSize << 1].val > segments[(segmentSize << 1) - 1].val) {
-                segments[segmentSize] = segments[segmentSize << 1];
-            } else {
-                segments[segmentSize] = segments[(segmentSize << 1) - 1];
-            }
+            if(segments[segmentSize << 1].val > segments[(segmentSize << 1) - 1].val) segments[segmentSize] = segments[segmentSize << 1];
+            else segments[segmentSize] = segments[(segmentSize << 1) - 1];
         }
     }
 
@@ -84,13 +79,11 @@ public class Main {
         if(left <= start && end <= right) {
             return segments[node];
         }
-        int mid = (start + end) / 2;
+        int mid = (start + end) >> 1;
         Jewel j1 = query(left, right, (node << 1) - 1, start, mid);
         Jewel j2 = query(left, right, node << 1, mid + 1, end);
 
-        if(j1.val > j2.val) {
-            return j1;
-        }
+        if(j1.val > j2.val) return j1;
         return j2;
     }
 
@@ -98,14 +91,10 @@ public class Main {
         int start = 0;
         int end = arr.length-1;
         while(start < end) {
-            int mid = (start + end) / 2;
+            int mid = (start + end) >> 1;
             Jewel jewel = arr[mid];
 
-            if(weight == jewel.weight && arr[mid + 1].weight == weight) {
-                start = mid + 1;
-                continue;
-            }
-            if(jewel.weight < weight) {
+            if(jewel.weight < weight || (weight == jewel.weight && arr[mid + 1].weight == weight)) {
                 start = mid + 1;
                 continue;
             }
