@@ -30,22 +30,19 @@ class Main {
             int a = node.a;
             int b = node.b;
             int val = node.val;
+            if(map.getOrDefault(a, false) | map.getOrDefault(b, false)) continue;
             if(val <= (arr[a] + arr[b])) continue;
-            if(!map.getOrDefault(a, false) && !map.getOrDefault(b, false)) {
-                answer += val;
-                map.put(a, true);
-                map.put(b, true);
-            }
+            answer += val;
+            map.put(a, true);
+            map.put(b, true);
         }
 
         for(int i = 0; i < N; i++) {
-            if(!map.getOrDefault(i, false)) {
-                answer += arr[i];
-            }
+            if(map.getOrDefault(i, false)) continue;
+            answer += arr[i];
         }
+
         System.out.println(answer);
-
-
     }
 
     private static class Node implements Comparable<Node> {
