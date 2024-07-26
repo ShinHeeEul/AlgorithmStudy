@@ -8,18 +8,12 @@ class Main {
 
         PriorityQueue<Integer> pq = new PriorityQueue<>();
 
-        for(int i = 0; i < N; i++) {
-            pq.add(read());
-        }
+        for(int i = 0; i < N; i++) pq.add(read());
 
-        long sum = 1;
+        int sum = 1;
         while(!pq.isEmpty()) {
             int a = pq.poll();
-
-            if(sum < a) {
-                System.out.println(sum);
-                return;
-            }
+            if(sum < a) break;
             sum += a;
         }
         System.out.println(sum);
