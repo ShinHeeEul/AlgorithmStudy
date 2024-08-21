@@ -15,7 +15,7 @@ class Solution {
         for(int i = size + 1; i < size + n + 1; i++) {
             segments[i] = stones[i - size - 1];
         }
-         int segmentSize = segments.length - 1;
+         int segmentSize = segments.length - 1;	
         while(segmentSize > 1) {
             segments[(segmentSize + 1) >> 1] = Math.max(segments[segmentSize], segments[segmentSize - 1]);
             segmentSize -= 2;
