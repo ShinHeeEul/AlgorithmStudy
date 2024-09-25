@@ -37,7 +37,6 @@ class Solution {
         if(count == map.length) {
             int people = 0;
             int price = 0;
-            System.out.println("s" + s);
             for(int j = 0; j < userss.length; j++) {
                 int[] user = userss[j];
                 int tmp = 0;
