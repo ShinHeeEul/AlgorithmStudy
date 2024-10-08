@@ -8,7 +8,6 @@ class Main {
         dp = new int[n];
 
         int count = 0;
-        int ans = 0;
         for(int i = 0; i < n; i++) {
             int a = read();
 
@@ -27,11 +26,10 @@ class Main {
                         end = mid;
                     }
                 }
-                ans++;
                 dp[start] = a;
             }
         }
-        System.out.println(ans);
+        System.out.println(n - count);
     }
 
 
