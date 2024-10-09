@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     ArrayList<String> answer;
-    int[] visited = new int[26];
+    int[] visited= new int[26];
     int[] number = new int[26];
     int[] courseCount;
     ArrayList<String> max = new ArrayList<>();
@@ -34,6 +34,7 @@ class Solution {
         }
         
         Collections.sort(answer);
+        
         return answer;
     }
     
