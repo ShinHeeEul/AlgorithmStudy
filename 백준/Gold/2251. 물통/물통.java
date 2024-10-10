@@ -1,73 +1,113 @@
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Stack;
+import org.w3c.dom.Node;
 
-public class Main {
-    static BufferedWriter bw;
+import java.util.*;
+
+class Main {
+
+    static HashSet<Integer> set = new HashSet<>();
+    static HashMap<Node, Boolean> map = new HashMap<>();
+    static Queue<Node> queue = new LinkedList<>();
+
     public static void main(String[] args) throws Exception {
-        bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int A = read();
         int B = read();
         int C = read();
-        int[] max = {A,B, C};
 
-        LinkedHashSet<Integer> answer=  new LinkedHashSet<>();
+        queue.add(new Node(0,0, C));
+        map.put(queue.peek(), true);
 
-        Stack<Node> stack = new Stack<>();
-        Node start = new Node(new int[]{0,0,C});
-        HashMap<String, Boolean> map = new HashMap<>();
-        stack.push(start);
+        while(!queue.isEmpty()) {
+            Node node = queue.poll();
+            int a = node.a;
+            int b = node.b;
+            int c = node.c;
 
-        while(!stack.isEmpty()) {
-            Node node = stack.pop();
+            if(a == 0) set.add(c);
 
-            if(node.current[0] == 0) {
-                answer.add(node.current[2]);
-            }
+            // a to b
+            int min = Math.min(a, B - b);
+            Node tmp = new Node(a - min, b + min,c);
+            valid(tmp);
 
-            for(int i = 0; i < 3; i++) {
-                int crt = node.current[i];
-                if(crt == 0) {
-                    continue;
-                }
-                for(int j = 0; j < 3; j++) {
-                    if(i == j) continue;
+            // a to c
+            min = Math.min(a, C - c);
+            tmp = new Node(a - min, b, c + min);
+            valid(tmp);
 
+            // b to a
+            min = Math.min(b, A - a);
+            tmp = new Node(a + min, b - min, c);
+            valid(tmp);
 
-                    int[] aa = node.current.clone();
-                    int dif = Math.min(crt, max[j] - node.current[j]);
-                    aa[i] = aa[i] - dif;
-                    aa[j] = aa[j] + dif;
-                    String s = aa[0] + "/" + aa[1] + "/" + aa[2];
-                    if(map.getOrDefault(s, false)) {
-                        continue;
-                    }
-                    map.put(s, true);
+            // b to c
+            min = Math.min(b, C - c);
+            tmp = new Node(a, b - min, c + min);
+            valid(tmp);
 
-                    stack.push(new Node(aa));
-                }
-            }
+            // c to a
+            min = Math.min(c, A - a);
+            tmp = new Node(a + min, b, c - min);
+            valid(tmp);
+
+            // c to b
+            min = Math.min(c, B - b);
+            tmp = new Node(a, b + min, c - min);
+            valid(tmp);
 
 
         }
 
-        answer.stream().sorted().forEach(x -> System.out.print(x + " "));
+        set.stream().sorted().forEach(a -> System.out.print(a + " "));
     }
 
-    static class Node{
-        int[] current;
-        public Node(int[] current) {
-            this.current = current.clone();
+    public static void valid(Node node) {
+
+        if(!map.getOrDefault(node, false)) {
+            map.put(node, true);
+            queue.add(node);
+        }
+
+    }
+
+
+    public static class Node {
+        int a;
+        int b;
+        int c;
+
+        public Node(int a, int b, int c) {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+        }
+
+        @Override
+        public int hashCode() {
+            return a * 90_000 + b * 300 + c;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            Node node = (Node) obj;
+            if(this.a == node.a && this.b == node.b && this.c == node.c) return true;
+            return false;
         }
     }
 
 
     private static int read() throws Exception {
-        int d, o = System.in.read() & 15;
+        int d, o;
+        boolean negative = false;
+        d = System.in.read();
+        if (d == 45) {
+            negative = true;
+            d = System.in.read();
+        }
+
+        o = d & 15;
         while ((d = System.in.read()) > 32)
             o = (o << 3) + (o << 1) + (d & 15);
-        return o;
+
+        return negative ? -o : o;
     }
 }
