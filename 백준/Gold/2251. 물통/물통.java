@@ -57,7 +57,7 @@ class Main {
 
 
         StringBuilder sb = new StringBuilder();
-        
+
         for(int a: set) sb.append(a).append(" ");
         System.out.println(sb);
     }
