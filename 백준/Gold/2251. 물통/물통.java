@@ -1,11 +1,8 @@
-import org.w3c.dom.Node;
-
-import java.io.BufferedReader;
 import java.util.*;
 
 class Main {
 
-    static HashSet<Integer> set = new HashSet<>();
+    static SortedSet<Integer> set = new TreeSet<>();
     static HashMap<Node, Boolean> map = new HashMap<>();
     static Queue<Node> queue = new LinkedList<>();
 
@@ -58,13 +55,10 @@ class Main {
 
         }
 
-        int[] arr = new int[set.size()];
-        int i = 0;
-        for(int a : set) arr[i++] = a;
-        Arrays.sort(arr);
 
         StringBuilder sb = new StringBuilder();
-        for(int a: arr) sb.append(a).append(" ");
+        
+        for(int a: set) sb.append(a).append(" ");
         System.out.println(sb);
     }
 
