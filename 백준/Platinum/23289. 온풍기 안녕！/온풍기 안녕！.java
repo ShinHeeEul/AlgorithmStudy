@@ -1,6 +1,4 @@
-    import org.w3c.dom.Node;
-
-    import java.util.ArrayList;
+import java.util.ArrayList;
     import java.util.LinkedList;
     import java.util.Queue;
 
@@ -37,7 +35,7 @@
                     if(a == 1) heaters.add(new Heater(i,j,1));
                     else if(a == 2) heaters.add(new Heater(i,j,2));
                     else if(a == 3) heaters.add(new Heater(i,j,0));
-                    else if(a == 4) heaters.add(new Heater(i, j, 3));
+                    else if(a == 4) heaters.add(new Heater(i,j, 3));
                     else if(a == 5) researches.add(new Integer[]{i, j});
                 }
             }
@@ -94,44 +92,45 @@
         }
 
         public static void fire(Heater heater) {
-            int i = heater.i;
-            int j = heater.j;
             int dir = heater.dir;
-            bfs(i + di[dir],j + dj[dir],dir);
+            bfs(heater.i + di[dir],heater.j + dj[dir],dir);
         }
 
         public static void bfs(int i, int j, int dir) {
             Queue<Node> queue = new LinkedList<>();
             boolean[][] visited = new boolean[R + 8][C + 8];
             int[] spreads = spreadSwitcher(dir);
+            int switchDir = switcher(dir);
 
             queue.add(new Node(i, j, 5));
             visited[i][j] = true;
             while(!queue.isEmpty()) {
                 Node node = queue.poll();
+                int ni = node.i;
+                int nj = node.j;
 
-                baram[node.i][node.j] += node.val;
+                baram[ni][nj] += node.val;
                 if(node.val == 1) continue;
                  // +
-                int maxI = node.i + di[dir] + spreadI[dir];
-                int maxJ = node.j + dj[dir] + spreadJ[dir];
-                if(!walls[node.i][node.j][spreads[1]] && !walls[maxI][maxJ][switcher(dir)] && !visited[maxI][maxJ] && check(maxI, maxJ)) {
+                int maxI = ni + di[dir] + spreadI[dir];
+                int maxJ = nj + dj[dir] + spreadJ[dir];
+                if(!walls[ni][nj][spreads[1]] && !walls[maxI][maxJ][switchDir] && !visited[maxI][maxJ] && check(maxI, maxJ)) {
                     visited[maxI][maxJ] = true;
                     queue.add(new Node(maxI, maxJ, node.val - 1));
                 }
 
                 // 중앙
-                int middleI = node.i + di[dir];
-                int middleJ = node.j + dj[dir];
-                if(!walls[middleI][middleJ][switcher(dir)] && !visited[middleI][middleJ] && check(middleI, middleJ)) {
+                int middleI = ni + di[dir];
+                int middleJ = nj + dj[dir];
+                if(!walls[middleI][middleJ][switchDir] && !visited[middleI][middleJ] && check(middleI, middleJ)) {
                     visited[middleI][middleJ] = true;
                     queue.add(new Node(middleI, middleJ, node.val - 1));
                 }
 
                 // -
-                int minI = node.i + di[dir] - spreadI[dir];
-                int minJ = node.j + dj[dir] - spreadJ[dir];
-                if(!walls[node.i][node.j][spreads[0]] && !walls[minI][minJ][switcher(dir)] && !visited[minI][minJ] && check(minI, minJ)) {
+                int minI = ni + di[dir] - spreadI[dir];
+                int minJ = nj + dj[dir] - spreadJ[dir];
+                if(!walls[ni][nj][spreads[0]] && !walls[minI][minJ][switchDir] && !visited[minI][minJ] && check(minI, minJ)) {
                     visited[minI][minJ] = true;
                     queue.add(new Node(minI, minJ, node.val - 1));
                 }
