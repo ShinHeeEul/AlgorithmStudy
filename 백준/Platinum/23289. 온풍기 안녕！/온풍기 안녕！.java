@@ -21,6 +21,7 @@
         static ArrayList<Integer[]> researches = new ArrayList<>();
         static ArrayList<Heater> heaters = new ArrayList<>();
         static boolean[][] visited;
+        static int[][] baram;
 
         public static void main(String[] args) throws Exception {
 
@@ -30,7 +31,7 @@
 
             map = new int[R + 8][C + 8];
             walls = new boolean[R + 8][C + 8][4];
-
+            baram = new int[R + 8][C + 8];
             for(int i = 4; i < R + 4; i++) {
                 for(int j = 4; j < C + 4; j++) {
                     int a = read();
@@ -57,12 +58,18 @@
                     }
             }
 
+
+            for(Heater heater : heaters) {
+                fire(heater);
+            }
+
             while(chocolate <= 100) {
                 // 1. 집에 있는 모든 온풍기에서 바람이 한 번 나옴
-                for(Heater heater : heaters) {
-                    fire(heater);
+                for(int i = 4; i < R+4; i++) {
+                    for(int j = 4; j < C + 4; j++) {
+                        map[i][j] += baram[i][j];
+                    }
                 }
-
                 // 2. 온도가 조절됨
                 changeDegree();
                 // 3. 온도가 1 이상인 가장 바깥쪽 칸의 온도가 1씩 감소
@@ -104,7 +111,7 @@
             while(!queue.isEmpty()) {
                 Node node = queue.poll();
 
-                map[node.i][node.j] += node.val;
+                baram[node.i][node.j] += node.val;
                 if(node.val == 1) continue;
                  // +
                 int maxI = node.i + di[dir] + spreadI[dir];
@@ -165,13 +172,7 @@
         }
 
         public static void coolDown() {
-//            for(int a = 4; a < R + 4; a++) {
-//                for(int b = 4; b < C + 4; b++) {
-//                    if(a >= 5 && b >= 5 && a <= R + 2 && b <= C + 2) continue;
-//                    if(a == 4 || b == 4 || a == R + 3 || b == C + 2) map[a][b] = Math.max(0, map[a][b] - 1);
-//                    else map[a][b] = 0;
-//                }
-//            }
+
             for(int a = 4; a < R + 4; a++) {
                 map[a][4] = Math.max(0, map[a][4] - 1);
                 map[a][C+3] = Math.max(0, map[a][C+3] - 1);
