@@ -20,7 +20,6 @@
         static int K;
         static ArrayList<Integer[]> researches = new ArrayList<>();
         static ArrayList<Heater> heaters = new ArrayList<>();
-        static boolean[][] visited;
         static int[][] baram;
 
         public static void main(String[] args) throws Exception {
@@ -103,7 +102,7 @@
 
         public static void bfs(int i, int j, int dir) {
             Queue<Node> queue = new LinkedList<>();
-            visited = new boolean[R + 8][C + 8];
+            boolean[][] visited = new boolean[R + 8][C + 8];
             int[] spreads = spreadSwitcher(dir);
 
             queue.add(new Node(i, j, 5));
@@ -152,11 +151,13 @@
             int[][] tmp = new int[R + 8][C + 8];
             for(int i = 4; i < R + 4; i++) {
                 for(int j = 4; j < C + 4; j++) {
-                    tmp[i][j] = map[i][j];
-                    for(int k = 0; k < 4; k++) {
+                    tmp[i][j] += map[i][j];
+                    for(int k = 1; k < 4; k+=2) {
                         int ii = i + di[k];
                         int jj = j + dj[k];
-                        tmp[i][j] += calculate(i,j,ii,jj,k);
+                        int val = calculate(i,j,ii,jj,k);
+                        tmp[i][j] += val;
+                        tmp[ii][jj] -= val;
                     }
                 }
             }
@@ -167,7 +168,7 @@
         }
 
         public static int calculate(int beforeI, int beforeJ, int afterI, int afterJ, int dir) {
-            if(walls[beforeI][beforeJ][dir] || afterI < 4 || afterJ < 4 || afterI > R + 3 || afterJ > C + 3) return 0;
+            if(walls[beforeI][beforeJ][dir] || !check(afterI, afterJ)) return 0;
             return (map[afterI][afterJ] - map[beforeI][beforeJ]) / 4;
         }
 
@@ -184,10 +185,7 @@
         }
 
         public static int switcher(int dir) {
-            if(dir == 0) return 3;
-            if(dir == 1) return 2;
-            if(dir == 2) return 1;
-            else return 0;
+            return 3 - dir;
         }
 
 
