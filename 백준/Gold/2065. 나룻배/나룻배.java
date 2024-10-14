@@ -1,10 +1,6 @@
-import org.w3c.dom.Node;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 class Main {
@@ -92,7 +88,7 @@ class Main {
             int index;
             int val;
 
-            public Node( int index, int val) {
+            public Node(int index, int val) {
                 this.index = index;
                 this.val = val;
             }
@@ -101,21 +97,5 @@ class Main {
 
                 return this.val - o.val;
             }
-        }
-
-        private static int read() throws Exception {
-            int d, o;
-            boolean negative = false;
-            d = System.in.read();
-            if (d == 45) {
-                negative = true;
-                d = System.in.read();
-            }
-
-            o = d & 15;
-            while ((d = System.in.read()) > 32)
-                o = (o << 3) + (o << 1) + (d & 15);
-
-            return negative ? -o : o;
         }
     }
