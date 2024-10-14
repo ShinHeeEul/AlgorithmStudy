@@ -33,12 +33,7 @@ class Main {
                 st = new StringTokenizer(br.readLine());
                 int tt = Integer.parseInt(st.nextToken());
                 String s = st.nextToken();
-
-                if(s.equals("left")) {
-                    pq[0].add(new Node(i, tt));
-                } else {
-                    pq[1].add(new Node(i, tt));
-                }
+                pq[s.equals("left")?0:1].add(new Node(i, tt));
             }
 
             while(pq[0].size() > 1 || pq[1].size() > 1) {
@@ -67,7 +62,7 @@ class Main {
                 }
                 // t만큼 이동
                 currentTime += t;
-                status = status ^ 1;
+                status ^= 1;
                 // 내려주면서 값 받기
                 a--;
                 for(; a >= 0 ; a--) {
