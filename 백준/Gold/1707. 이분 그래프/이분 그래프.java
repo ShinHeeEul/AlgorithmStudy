@@ -13,7 +13,7 @@ public class Main {
         while(T --> 0) {
             int N = read();
             int E = read();
-            int[] arr = new int[N + 1];
+            boolean[] arr = new boolean[N + 1];
             boolean[] visited = new boolean[N + 1];
 
             ArrayList<Integer>[] graphs = new ArrayList[N + 1];
@@ -31,17 +31,17 @@ public class Main {
             boolean b = true;
             for(int i = 1; i <= N; i++) {
                 if(visited[i]) continue;
-
                 visited[i] = true;
 
                 Queue<Integer> q = new LinkedList<>();
                 q.add(i);
+                
                 while(!q.isEmpty()) {
                     int a = q.poll();
                     for(int v : graphs[a]) {
                         if(!visited[v]) {
                             visited[v] = true;
-                            arr[v] = arr[a] ^ 1;
+                            arr[v] = !arr[a];
                             q.add(v);
                         } else {
                             if(arr[a] == arr[v]) {
