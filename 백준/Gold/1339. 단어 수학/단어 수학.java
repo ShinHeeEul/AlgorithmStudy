@@ -3,8 +3,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-
-    // 등장한 갯수 만큼으로 정렬
     static PriorityQueue<Node> pq;
     static Map<Character, Integer> map;
     static Map<Character, Integer> ans;
@@ -29,8 +27,6 @@ public class Main {
         }
 
         for(char c : map.keySet()) pq.add(new Node(c, map.get(c)));
-
-        //최대인 것부터 찾아서 배치
         int max = 9;
         while(!pq.isEmpty()) {
           Node node = pq.poll();
