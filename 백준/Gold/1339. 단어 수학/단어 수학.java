@@ -1,5 +1,3 @@
-import org.w3c.dom.Node;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -7,7 +5,7 @@ import java.util.*;
 public class Main {
 
     // 등장한 갯수 만큼으로 정렬
-    static PriorityQueue<String> pq;
+    static PriorityQueue<Node> pq;
     static Map<Character, Integer> map;
     static Map<Character, Integer> ans;
     static String[] ss;
@@ -30,14 +28,15 @@ public class Main {
             }
         }
 
-        for(char c : map.keySet()) nodes.add(new Node(c, map.get(c)));
+        for(char c : map.keySet()) pq.add(new Node(c, map.get(c)));
 
         //최대인 것부터 찾아서 배치
-        Collections.sort(nodes);
         int max = 9;
-        for(Node node : nodes) {
-            ans.put(node.c, max--);
+        while(!pq.isEmpty()) {
+          Node node = pq.poll();
+          ans.put(node.c, max--);
         }
+
         long answer = 0;
         for(String s : ss) {
             long tmp = 0;
