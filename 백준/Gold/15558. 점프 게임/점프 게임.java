@@ -29,7 +29,6 @@ public class Main {
         
         Stack<Node> stack = new Stack<>();
         stack.add(new Node(line, idx, time));
-        
         visited[0][0] = true;
         
         while(!stack.isEmpty()) {
@@ -47,68 +46,35 @@ public class Main {
             
             
             //1번 행동
-            if(nl == 'l' && left[ni + 1] == '1' && !visited[ni + 1][0]) {
-                visited[ni + 1][0] = true;
+            if(nl == 'l' && left[ni + 1] == '1') {
+                left[ni + 1] = '0';
                 stack.add(new Node('l', ni + 1, nt + 1));
-            } else if(nl == 'r' && right[ni + 1] == '1' && !visited[ni + 1][1]) {
-                visited[ni + 1][1] = true;
+            } else if(nl == 'r' && right[ni + 1] == '1') {
+                right[ni + 1] = '0';
                 stack.add(new Node('r', ni + 1, nt + 1));
             }
             
             //2번 행동
-            if(nl == 'l' && ni-1 > nt && left[ni - 1] == '1' && !visited[ni - 1][0]) {
-                visited[ni - 1][0] = true;
+            if(nl == 'l' && ni-1 > nt && left[ni - 1] == '1') {
+                left[ni - 1] = '0';
                 stack.add(new Node('l', ni - 1, nt + 1));
-            } else if(nl == 'r' && ni-1 > nt && right[ni - 1] == '1' && !visited[ni - 1][1]) {
-                visited[ni - 1][1] = true;
+            } else if(nl == 'r' && ni-1 > nt && right[ni - 1] == '1') {
+                right[ni - 1] = '0';
                 stack.add(new Node('r', ni - 1, nt + 1));
             }
             
             //3번행동
-            if(nl == 'l' && right[ni + k] == '1' && !visited[ni + k][1]) {
-                visited[ni + k][1] = true;
+            if(nl == 'l' && right[ni + k] == '1') {
+                right[ni + k] = '0';
                 stack.add(new Node('r', ni + k, nt + 1));
-            } else if(nl == 'r' && left[ni + k] == '1' && !visited[ni + k][0]) {
-                visited[ni + k][0] = true;
+            } else if(nl == 'r' && left[ni + k] == '1') {
+                left[ni + k] = '0';
                 stack.add(new Node('l', ni + k, nt + 1));
             }
             
         }
         return false;
-        /*
-        // 클리어
-        if(idx+k >= n) {
-            answer = 1;
-            return true;
-        }
-
-        // 1번 행동
-        if(line == 'l'  && left[idx+1] == '1') {
-            left[idx+1] = '0'; // 방문
-            if(func('l', idx+1, time+1)) return true;
-        } else if (line == 'r' && right[idx+1] == '1') {
-            right[idx+1] = '0'; // 방문
-            if(func('r', idx+1, time+1)) return true;
-        }
-        // 2번 행동
-        if(line == 'l' && idx-1 > time && left[idx-1] == '1') {
-            left[idx-1] = '0'; // 방문
-            if(func('l', idx-1, time+1)) return true;
-        } else if (line == 'r' && idx-1 > time && right[idx-1] == '1') {
-            right[idx-1] = '0'; // 방문
-            if(func('r', idx-1, time+1)) return true;
-        }
-        // 3번 행동
-        if(line == 'l'  && right[idx+k] == '1') {
-            right[idx+k] = '0'; // 방문
-            if(func('r', idx+k, time+1)) return true;
-        } else if (line == 'r' && left[idx+k] == '1') {
-            left[idx+k] = '0'; // 방문
-            if(func('l', idx+k, time+1)) return true;
-        }
-
-        return false;
-        */
+       
         
         
     }
