@@ -11,7 +11,7 @@ public class Main {
     static int n, k;
     static int answer = 0;
     static char[] left, right;
-    static boolean[][] visited;
+    
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -19,7 +19,6 @@ public class Main {
         k = Integer.parseInt(st.nextToken());
         left = br.readLine().toCharArray();
         right = br.readLine().toCharArray();
-        visited = new boolean[n][2];
     
         func('l', 0, 0);
         System.out.print(answer);
@@ -29,7 +28,6 @@ public class Main {
         
         Stack<Node> stack = new Stack<>();
         stack.add(new Node(line, idx, time));
-        visited[0][0] = true;
         
         while(!stack.isEmpty()) {
             Node node = stack.pop();
