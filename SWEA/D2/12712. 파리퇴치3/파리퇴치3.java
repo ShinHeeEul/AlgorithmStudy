@@ -22,19 +22,20 @@ public class Solution {
 
             N = Integer.parseInt(st.nextToken());
             M = Integer.parseInt(st.nextToken());
+            int M2 = M << 1;
 
-            arr = new int[N][N];
+            arr = new int[N + M2][N + M2];
             int max = 0;
 
-            for(int i = 0; i < N; i++) {
+            for(int i = M; i < N + M; i++) {
                 st = new StringTokenizer(br.readLine());
-                for(int j = 0; j < N; j++) {
+                for(int j = M; j < N + M; j++) {
                     arr[i][j] = Integer.parseInt(st.nextToken());
                 }
             }
 
-            for(int i = 0; i < N; i++) {
-                for(int j = 0; j < N; j++) {
+            for(int i = M; i < N + M; i++) {
+                for(int j = M; j < N + M; j++) {
                     max = Math.max(max, arr[i][j] + spread(i, j));
                 }
             }
@@ -51,19 +52,15 @@ public class Solution {
             for(int n = 0; n < 4; n++) {
                 int ni = i + m * di[n];
                 int nj = j + m * dj[n];
-                if(check(ni, nj)) cross += arr[ni][nj];
+                cross += arr[ni][nj];
             }
             for(int n = 4; n < 8; n++) {
                 int ni = i + m * di[n];
                 int nj = j + m * dj[n];
-                if(check(ni, nj)) x += arr[ni][nj];
+                x += arr[ni][nj];
             }
         }
         return Math.max(cross, x);
-    }
-
-    public static boolean check(int i, int j) {
-        return i >= 0 && i < N && j >= 0 && j < N;
     }
 
 }
