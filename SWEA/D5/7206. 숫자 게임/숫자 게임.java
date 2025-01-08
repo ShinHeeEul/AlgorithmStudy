@@ -5,8 +5,7 @@ class Solution
 {
     static int[] dp;
     static int a;
-    static Stack<Node> stack;
-
+    
     public static void main(String args[]) throws Exception
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,7 +18,6 @@ class Solution
         }
         StringBuilder sb = new StringBuilder();
         for(int t = 1; t <= T; t++) {
-
             a = Integer.parseInt(br.readLine());
             sb.append("#").append(t).append(" ").append(dp[a]).append("\n");
         }
@@ -37,17 +35,6 @@ class Solution
         while(radix < val) {
             backTracking(current, val / radix, multi * (val % radix));
             radix *= 10;
-        }
-    }
-
-
-
-    public static class Node {
-        int val;
-        int count;
-        Node(int val, int count) {
-            this.val = val;
-            this.count = count;
         }
     }
 }
