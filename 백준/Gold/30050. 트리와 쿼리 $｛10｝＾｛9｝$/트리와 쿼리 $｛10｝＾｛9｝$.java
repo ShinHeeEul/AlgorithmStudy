@@ -10,16 +10,14 @@ public class Main {
 		// a랑 b 연결 해
 		// a에서 b가는거 하나 추가하고, 원래 있던 거 끊고 b에서 a가는거추가해
 		
-		// 그리고 가는 점은 그냥 bfs 때려 이게 맘 편해
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		// 그리고 가는 점은 그냥 bfs 때려 이게 맘 편해=
 		
-		int Q = Integer.parseInt(br.readLine());
+		int Q = read();
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < Q; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			int n = Integer.parseInt(st.nextToken());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
+			int n = read();
+			int a = read();
+			int b = read();
 			
 			if(n == 1) {
 				// b to a
