@@ -55,14 +55,14 @@ class Main {
             return;
         }
 
-
-        for(int a = 0; a < R % (((N + M - (depth << 2))  << 1) - 4); a++) {
+        int b = (N + M - (depth << 2) << 1) - 4;
+        for(int a = 0; a < R % b; a++) {
             int[] dir = new int[size];
             int i = depth;
             int j = depth;
             int tmp = turn[depth][depth];
 
-            for (int t = 0; t < ((N + M - (depth << 2)) << 1) - 4; t++) {
+            for (int t = 0; t < b; t++) {
                 // 범위 밖으로 튀어 나갔다? 방향 바꾸고
 
                 i += di[dir[depth]];
