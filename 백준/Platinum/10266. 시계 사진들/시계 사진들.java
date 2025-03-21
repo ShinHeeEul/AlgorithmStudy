@@ -1,10 +1,13 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 public class Main {
 
 
+    static HashMap<Integer, Integer> map1 = new HashMap<>();
+    static HashMap<Integer, Integer> map2 = new HashMap<>();
     static int[] s1;
     static int[] s2;
 
@@ -35,18 +38,25 @@ public class Main {
         s1 = new int[N];
         s2 = new int[N << 1];
 
+        int sum = 0;
         for(int i = 0; i < N-1; i++) {
             s1[i] = arr1[i + 1] - arr1[i];
             s2[i] = arr2[i + 1] - arr2[i];
             s2[N + i] = s2[i];
+            sum ^= s1[i];
+            sum ^= s2[i];
         }
 
         s1[N-1] = MAX + arr1[0] - arr1[N-1];
         s2[N-1] = MAX + arr2[0] - arr2[N-1];
 
+        sum ^= s1[N-1];
+        sum ^= s2[N-1];
 
-
-
+        if(sum != 0) {
+            System.out.println("impossible");
+            return;
+        }
         failureFunction();
         System.out.println(kmp() ? "possible" : "impossible");
     }
