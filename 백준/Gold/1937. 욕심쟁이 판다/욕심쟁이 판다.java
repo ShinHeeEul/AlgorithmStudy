@@ -5,7 +5,6 @@ public class Main {
     static int[][] arr;
     static int[][] dp;
     static int max = 0;
-    static int DEFAULT = Integer.MIN_VALUE >> 1;
     static int N;
 
     static int[] di = {1, -1, 0, 0};
@@ -19,7 +18,6 @@ public class Main {
         dp = new int[N][N];
 
         for(int i = 0; i < N; i++) {
-            Arrays.fill(dp[i], DEFAULT);
             for(int j = 0; j < N; j++) {
                 arr[i][j] = read();
             }
@@ -27,7 +25,6 @@ public class Main {
 
         for(int i = 0; i < N; i++) {
             for(int j = 0; j  < N; j++) {
-                int a = backTracking(i, j);
                 max = Math.max(max, backTracking(i, j));
             }
         }
@@ -36,7 +33,7 @@ public class Main {
 
     public static int backTracking(int i, int j) {
 
-        if(dp[i][j] != DEFAULT) return dp[i][j];
+        if(dp[i][j] != 0) return dp[i][j];
 
         boolean b = true;
         for(int t = 0; t < 4; t++) {
