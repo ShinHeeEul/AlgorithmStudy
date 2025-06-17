@@ -6,7 +6,7 @@ class Main {
     static int[][] arr;
     static int[] dist;
     static int N;
-    static PriorityQueue<Integer> pq;
+    static Queue<Integer> pq;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,7 +34,7 @@ class Main {
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        pq = new PriorityQueue<>();
+        pq = new LinkedList<>();
         dist = new int[N + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[start] = 0;
