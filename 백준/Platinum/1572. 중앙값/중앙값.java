@@ -44,7 +44,6 @@ public class Main {
             answer += (node - size);
             return;
         }
-        if(a == 0 && segments[node * 2] == 0) find(node * 2 + 1, 0);
         // 왼쪽 노드 (* 2)가 a보다 크거나 같다?
             // 왼쪽 노드로 내려가기
         else if(segments[node * 2] >= a) find(node * 2, a);
