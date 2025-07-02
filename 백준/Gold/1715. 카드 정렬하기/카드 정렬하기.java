@@ -1,35 +1,44 @@
-import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
-public class Main {
+public class Main
+{
 
-    static int[] arr;
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        int N = Integer.parseInt(br.readLine());
-
-        PriorityQueue<Long> queue = new PriorityQueue<>();
-
-        for(int i=0; i < N;i++) queue.add(Long.parseLong(br.readLine()));
-
+    public static void main(String[] args) throws Exception {
+        int N = read();
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i = 0; i < N; i++) pq.add(read());
 
         if(N == 1) {
             System.out.println(0);
             return;
         }
-
-        long tmp = 0;
-        long ans = tmp;
-
-        while(!queue.isEmpty()) {
-            if(queue.size() == 1) break;
-            tmp = queue.poll() + queue.poll();
-            ans += tmp;
-            queue.add(tmp);
+        int sum = 0;
+        while(pq.size() > 1) {
+            int a = pq.poll();
+            int b = pq.poll();
+            sum += (a + b);
+            pq.add(a + b);
         }
-
-        System.out.println(ans);
+        System.out.println(sum);
     }
+
+    private static int read() throws Exception {
+        int d, o;
+        boolean negative = false;
+        d = System.in.read();
+
+        if (d == '-') {
+
+            negative = true;
+            d = System.in.read();
+        }
+        o = d & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+
+        return negative? -o:o;
+    }
+
+
 }
