@@ -9,12 +9,10 @@ class Main {
     static int N;
     static int size;
     public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T =  Integer.parseInt(br.readLine());
+        int T =  read();
         StringBuilder sb = new StringBuilder();
         for(int t = 0; t < T; t++) {
-            N = Integer.parseInt(br.readLine());
-
+            N = read();
             size = 1;
 
             while (size < N) size <<= 1;
@@ -22,11 +20,7 @@ class Main {
 
             // Point 별로 값을 저장해두고, x좌표 순으로 정렬 후 index 매기기
             Point[] arr = new Point[N];
-            for (int i = 0; i < N; i++) {
-                StringTokenizer st = new StringTokenizer(br.readLine());
-                arr[i] = new Point(Integer.parseInt(st.nextToken()),
-                        Integer.parseInt(st.nextToken()), 0, Integer.parseInt(st.nextToken()));
-            }
+            for (int i = 0; i < N; i++) arr[i] = new Point(read(), read(), 0, read());
 
             Arrays.sort(arr, (o1, o2) -> {
                 if (o1.x == o2.x) return Integer.compare(o1.val, o2.val);
