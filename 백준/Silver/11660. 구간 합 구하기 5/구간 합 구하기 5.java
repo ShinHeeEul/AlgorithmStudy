@@ -1,59 +1,50 @@
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.util.*;
-
-
 public class Main {
+    public static void main(String[] args) throws Exception {
 
-    public static void main(String[] args) throws IOException {
+        int N = read();
+        int M = read();
 
+        int[][] arr = new int[N + 1][N + 1];
 
-        InputStreamReader input = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(input);
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        int N = Integer.parseInt(st.nextToken());
-        int[][] table = new int[N][N];
-        int M = Integer.parseInt(st.nextToken());
-        for(int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            table[i][0] = Integer.parseInt(st.nextToken());
-            for(int j = 1; j < N; j++) {
-                table[i][j] = table[i][j-1] + Integer.parseInt(st.nextToken());
+        for(int i = 1; i <= N; i++) {
+            for(int j = 1; j <= N; j++) {
+                arr[i][j] = arr[i][j-1] + read();
             }
         }
-        for(int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int x1 = Integer.parseInt(st.nextToken()) - 1;
-            int y1 = Integer.parseInt(st.nextToken()) - 1;
-            int x2 = Integer.parseInt(st.nextToken()) - 1;
-            int y2 = Integer.parseInt(st.nextToken()) - 1;
+
+
+        StringBuilder sb = new StringBuilder();
+
+        while(M --> 0) {
             int sum = 0;
 
+            int y1 = read();
+            int x1 = read();
+            int y2 = read();
+            int x2 = read();
 
-            if(y1 == 0) {
-                for(int j = x1; j <= x2; j++) {
-                    sum += table[j][y2];
-                }
-                bw.write(sum + "\n");
+            for(int i = y1; i <= y2; i++) {
+                sum += arr[i][x2] - arr[i][x1 - 1];
             }
-
-            else {
-                for(int j = x1; j <= x2; j++) {
-                    sum += table[j][y2] - table[j][y1-1];
-                }
-                bw.write(sum + "\n");
-            }
-
+            sb.append(sum).append("\n");
         }
 
-        bw.flush();
+        System.out.println(sb);
+    }
 
-        input.close();
-        br.close();
-        bw.close();
+    private static int read() throws Exception {
+        int d, o;
+        boolean negative = false;
+        d = System.in.read();
+        if (d == '-') {
+            negative = true;
+            d = System.in.read();
+        }
+
+        o = d & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+
+        return negative? -o:o;
     }
 }
