@@ -26,20 +26,18 @@ public class Main {
             dp[1][arr[i][1]]++;
         }
 
-        for(int i = 0; i < N; i++) {
+        for(int i = 1; i < N; i++) {
             // 지금 단어의 몇번째 접미인게 몇개냐?
                 for(int k = 0; k < K; k++) {
-                    // k번째의 접두와 현재 접미가 일치하면 +1에 접미에 넣고, +2에 접미에 넣고
+                    dp[i + 1][arr[k][1]]++;
                     dp[i + 1][arr[k][1]] = (dp[i + 1][arr[k][1]] + dp[i][arr[k][0]]) % MAX;
-            }
+                }
         }
 
         long sum = 0;
-        for(int j = 0; j < N; j++) {
             for (int i = 0; i < 26; i++) {
-                sum = (sum + dp[j][i]) % MAX;
+                sum = (sum + dp[N-1][i]) % MAX;
             }
-        }
         System.out.println(sum);
     }
 
