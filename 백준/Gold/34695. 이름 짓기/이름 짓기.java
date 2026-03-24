@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -16,7 +15,7 @@ public class Main {
 
         // i번째 조합이 j이고 k이다.
         // 1차가 가는거 // 2차는 현재 영문자로 끝나는 문자열이 몇개인가
-        dp = new int[N + 20][26];
+        dp = new int[N + 1][26];
         arr = new int[K][2];
 
         for(int i = 0; i < K; i++) {
@@ -35,9 +34,9 @@ public class Main {
         }
 
         long sum = 0;
-            for (int i = 0; i < 26; i++) {
-                sum = (sum + dp[N-1][i]) % MAX;
-            }
+        for (int i = 0; i < 26; i++) {
+            sum = (sum + dp[N-1][i]) % MAX;
+        }
         System.out.println(sum);
     }
 
