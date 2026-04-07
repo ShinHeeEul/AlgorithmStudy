@@ -1,84 +1,81 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-class Main {
+public class Main {
 
-	
-	static int[] di = {0,1,1};
-	static int[] dj = {1,0,1};
-	static boolean[][] map;
-	static int N;
-	public static void main(String args[]) throws Exception {
-		
-		N = read();
-		
-		map = new boolean[N][N];
-		
-		for(int i = 0; i < N; i++) {
-			for(int j = 0; j < N; j++) map[i][j] = read() == 1;
-		}
-		
-		int[][][] dp = new int[N][N][3];
-		
-		dp[0][1][0] = 1;
-		
-		for(int i = 0; i < N; i++) {
-			for(int j = 0; j < N; j++) {
-				int ni = i + 1;
-				int nj = j + 1;
-				// 가로로 놓여있을때
-				if(check(i, nj, true)) dp[i][nj][0] += dp[i][j][0];
-				if(check(ni, nj, false)) dp[ni][nj][2] += dp[i][j][0];
-				
-				// 세로로 놓여있을때
-				if(check(ni, j, true)) dp[ni][j][1] += dp[i][j][1];
-				if(check(ni, nj, false)) dp[ni][nj][2] += dp[i][j][1];
-				
-				// 대각선으로 놓여있을 때
-				if(check(ni, j, true)) dp[ni][j][1] += dp[i][j][2];
-				if(check(i, nj, true)) dp[i][nj][0] += dp[i][j][2];
-				if(check(ni, nj, false)) dp[ni][nj][2] += dp[i][j][2];
-				
-			}
-		}
-		
-//		for(int i = 0; i < N; i++) {
-//			for(int j = 0; j < N; j++) {
-//				System.out.print(dp[i][j][0] + "" + dp[i][j][1] + "" + dp[i][j][2] + " ");
-//			}
-//			System.out.println();
-//		}
-//		
-		System.out.println(dp[N-1][N-1][0] + dp[N-1][N-1][1] + dp[N-1][N-1][2]);
-	}
-	
-	public static boolean check(int i, int j, boolean b) {
-		if(b)return i >= 0 && j >= 0 && i < N && j < N && !map[i][j];
-		return i >= 0 && j >= 0 && i < N && j < N && !map[i][j] && !map[i-1][j] && !map[i][j-1];
-	}
-	
+    static int[][][] dp;
+    static boolean[][] visited;
+    static int N;
+    public static void main(String[] args) throws Exception {
+        N = read();
 
-	private static int read() throws Exception {
-	    int c;
-	    int n = 0;
-	    boolean negative = false;
+        visited = new boolean[N][N];
 
-	    while ((c = System.in.read()) <= 32) {
-	        if (c == -1) return -1;
-	    }
+        // 0 - 가로 1 - 세로 2 - 대각선
+        dp = new int[N + 1][N + 1][3];
 
-	    if (c == '-') {
-	        negative = true;
-	        c = System.in.read();
-	    }
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < N; j++) {
+                visited[i][j] = read() == 1;
+            }
+        }
 
-	    do {
-	        n = n * 10 + (c - '0');
-	        c = System.in.read();
-	    } while (c > 32);
+        dp[0][1][0] = 1;
 
-	    return negative ? -n : n;
-	}
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < N; j++) {
+                // 가로 일 때
+                    // 가로
+                checkAndAdd(i, j + 1, 0, dp[i][j][0]);
+                    // 대각선
+                checkAndAdd(i + 1, j + 1, 2, dp[i][j][0]);
 
 
+                // 세로 일 때
+                    // 세로
+                checkAndAdd(i + 1, j, 1, dp[i][j][1]);
+                    // 대각선
+                checkAndAdd(i + 1, j + 1, 2, dp[i][j][1]);
+
+                // 대각선 일 때
+                    // 가로
+                checkAndAdd(i, j + 1, 0, dp[i][j][2]);
+                    // 세로
+                checkAndAdd(i + 1, j, 1, dp[i][j][2]);
+                    // 대각선
+                checkAndAdd(i + 1, j + 1, 2, dp[i][j][2]);
+            }
+        }
+
+        System.out.println(dp[N-1][N-1][0] + dp[N-1][N-1][1] + dp[N-1][N-1][2]);
+
+    }
+
+    public static void checkAndAdd(int i, int j, int dir, int val) {
+        if(i >= 0 && i < N && j >= 0 && j < N) {
+            if((dir == 0 || dir == 1) && !visited[i][j]) {
+                dp[i][j][dir] += val;
+            } else if(dir == 2 && !visited[i][j] && !visited[i-1][j] && !visited[i][j-1]) {
+                dp[i][j][dir] += val;
+            }
+        }
+    }
+
+    private static int read() throws Exception {
+        int d, o;
+        boolean negative = false;
+        d = System.in.read();
+
+        if (d == '-') {
+
+            negative = true;
+            d = System.in.read();
+        }
+        o = d & 15;
+        while ((d = System.in.read()) > 32)
+            o = (o << 3) + (o << 1) + (d & 15);
+
+        return negative? -o:o;
+    }
 }
